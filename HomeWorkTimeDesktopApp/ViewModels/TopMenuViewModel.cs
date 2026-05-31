@@ -3,7 +3,7 @@ using System.Diagnostics;
 
 namespace HomeWorkTimeDesktopApp.ViewModels;
 
-public partial class TopMenu : ObservableObject
+public partial class TopMenuViewModel : ObservableObject
 {
     private bool _isDebbugMode = Debugger.IsAttached;
 
@@ -16,7 +16,7 @@ public partial class TopMenu : ObservableObject
     [ObservableProperty]
     private bool configVisible = false;
 
-    public TopMenu()
+    public TopMenuViewModel()
     {
          
     }
