@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:HomeWorkTimeDesktopApp"
         xmlns:viewmodels="clr-namespace:HomeWorkTimeDesktopApp.ViewModels"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        mc:Ignorable="d"
-        d:DataContext="{d:DesignInstance Type=viewmodels:MainWindowViewModel, IsDesignTimeCreatable=True}"
+            mc:Ignorable="d"
+            d:DataContext="{d:DesignInstance Type=viewmodels:MainWindowViewModel, IsDesignTimeCreatable=True}"
         Title="{Binding MainTitle}" Height="210" Width="380">
     <Grid>
         <StackPanel
@@ -50,7 +50,7 @@
                     IsEnabled="{Binding Path=ButtonStartEnabled}"
                     Command="{Binding Path=StartCommand}">
                     <materialDesign:PackIcon Width="25" Height="25" Kind="Timer" 
-                IsEnabled="{Binding Path=ButtonStartEnabled}"/>
+                    IsEnabled="{Binding Path=ButtonStartEnabled}"/>
                 </Button>
                 <!--Click="StartTimer_Click"-->
                 <!--Click="StopTimer_Click"-->

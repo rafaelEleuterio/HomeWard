@@ -5,33 +5,38 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing.Imaging;
 using System.Text;
+using HomeWorkTimeDesktopApp.Infrastructure.Services.WorkSessionTimer;
+using HomeWorkTimeDesktopApp.Infrastructure.Handlers;
+using CommunityToolkit.Mvvm.Input;
+using HomeWorkTimeDesktopApp.Domain.Enums;
 
 namespace HomeWorkTimeDesktopApp.ViewModels;
 
 public partial class MainWindowViewModel : ObservableObject
 {
-    private System.Timers.Timer _workedTimer = new System.Timers.Timer(333);
-    private System.Timers.Timer _paidPausedTimer = new System.Timers.Timer(333);
-    private System.Timers.Timer _unPaidTimer = new System.Timers.Timer(333);
+    private readonly IWorkSessionTimer _timer;
 
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(TotalWorkedTimeText))]
-    private TimeSpan totalWorkedTime = TimeSpan.Zero;
-    [ObservableProperty]
-    private TimeSpan totalPaidPausedTime = TimeSpan.Zero;
-    [ObservableProperty]
-    private TimeSpan currentlyPaidPausedTime = TimeSpan.Zero;
-    [ObservableProperty]
-    private TimeSpan totalUnaidPausedTime = TimeSpan.Zero;
-    [ObservableProperty]
-    private TimeSpan currentlyUnpaidPausedTime = TimeSpan.Zero;
-    
+    private TimeSpan workedTime;
     public string MainTitle { get; set; }
-    public string TotalWorkedTimeText { get { return $"{TotalWorkedTime.Hours}:{TotalWorkedTime.Minutes}"; } }
+    public string TotalWorkedTimeText { get { return $"{WorkedTime.Hours}:{WorkedTime.Minutes}"; } }
 
 
-    public MainWindowViewModel()
+    public MainWindowViewModel(IWorkSessionTimer timer)
     {
         MainTitle = Debugger.IsAttached ? "HomeWorkTimeDesktopApp (Debug)" : "HomeWorkTimeDesktopApp";
+        _timer = timer;
+
+        _timer.Updated += UpdateValues;
+    }
+    private void UpdateValues()
+    {
+        WorkedTime = _timer.WorkedTime;
+    }
+
+    [RelayCommand]
+    public void Start()
+    {
+        _timer.ChangeState(SessionState.Paused);
     }
 }

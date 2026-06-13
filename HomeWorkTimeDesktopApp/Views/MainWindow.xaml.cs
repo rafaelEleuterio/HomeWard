@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using HomeWorkTimeDesktopApp.ViewModels;
+using System.Windows;
 
 namespace HomeWorkTimeDesktopApp.Views;
 /// <summary>
@@ -6,8 +7,9 @@ namespace HomeWorkTimeDesktopApp.Views;
 /// </summary>
 public partial class MainWindow : Window
 {
-    public MainWindow()
+    public MainWindow(MainWindowViewModel vm)
     {
         InitializeComponent();
+        DataContext = vm;
     }
 }
