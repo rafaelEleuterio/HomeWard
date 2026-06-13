@@ -6,5 +6,5 @@ public enum SessionState
     Working,
     Resting,
     Paused,
-    Finished
+    Finished // Stop
 }

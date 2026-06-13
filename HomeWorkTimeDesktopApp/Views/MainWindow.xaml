@@ -47,10 +47,8 @@
                     Style="{StaticResource MaterialDesignFloatingActionLightButton}"
                     Margin="8,8,8,8"
                     ToolTip="Bora começar a trampar!"
-                    IsEnabled="{Binding Path=ButtonStartEnabled}"
                     Command="{Binding Path=StartCommand}">
-                    <materialDesign:PackIcon Width="25" Height="25" Kind="Timer" 
-                    IsEnabled="{Binding Path=ButtonStartEnabled}"/>
+                    <materialDesign:PackIcon Width="25" Height="25" Kind="Timer"/>
                 </Button>
                 <!--Click="StartTimer_Click"-->
                 <!--Click="StopTimer_Click"-->
@@ -58,40 +56,32 @@
                     Style="{StaticResource MaterialDesignFloatingActionLightButton}"
                     Margin="8,8,8,8"
                     ToolTip="Chega de trampo por hoje!"
-                    IsEnabled="{Binding Path=ButtonStopEnabled}"
                     Command="{Binding Path=StopCommand}">
-                    <materialDesign:PackIcon Width="25" Height="25" Kind="TimerStop" 
-                        IsEnabled="{Binding Path=ButtonStopEnabled}"/>
+                    <materialDesign:PackIcon Width="25" Height="25" Kind="TimerStop"/>
                 </Button>
                 <!--Click="ResumeTimer_Click"-->
                 <Button
                     Style="{StaticResource MaterialDesignFloatingActionLightButton}"
                     Margin="8,8,8,8"
                     ToolTip="Bora voltar a trampar!"
-                    IsEnabled="{Binding Path=ButtonResumeEnabled}"
                     Command="{Binding Path=ResumeCommand}">
-                    <materialDesign:PackIcon Width="25" Height="25" Kind="TimerPlay" 
-                IsEnabled="{Binding Path=ButtonResumeEnabled}"/>
+                    <materialDesign:PackIcon Width="25" Height="25" Kind="TimerPlay"/>
                 </Button>
                 <!--Click="OnCoffeeBreak_Click"-->
                 <Button
                     Style="{StaticResource MaterialDesignFloatingActionLightButton}"
                     Margin="8,8,8,8"
                     ToolTip="Pausinha remunerada :)"
-                    IsEnabled="{Binding Path=ButtonCoffeeBreakEnabled}"
-                    Command="{Binding Path=CoffeeBreakCommand}">
-                    <materialDesign:PackIcon Width="25" Height="25" Kind="Coffee"
-                        IsEnabled="{Binding Path=ButtonCoffeeBreakEnabled}"/>
+                    Command="{Binding Path=RestCommand}">
+                    <materialDesign:PackIcon Width="25" Height="25" Kind="Coffee"/>
                 </Button>
                 <!--Click="OnNonCoffeeBreak_Click"-->
                 <Button
                     Style="{StaticResource MaterialDesignFloatingActionLightButton}"
                     Margin="8,8,8,8"
                     ToolTip="Pausa não remunerada :("
-                    IsEnabled="{Binding Path=ButtonNonCoffeeBreakEnabled}"
-                    Command="{Binding Path=NonCoffeeBreakCommand}">
-                    <materialDesign:PackIcon Width="25" Height="25" Kind="CoffeeOff" 
-                        IsEnabled="{Binding Path=ButtonNonCoffeeBreakEnabled}"/>
+                    Command="{Binding Path=PauseCommand}">
+                    <materialDesign:PackIcon Width="25" Height="25" Kind="CoffeeOff"/>
                 </Button>
             </StackPanel>
         </StackPanel>
