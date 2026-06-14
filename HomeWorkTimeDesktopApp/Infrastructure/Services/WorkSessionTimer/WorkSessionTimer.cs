@@ -1,9 +1,9 @@
-﻿using HomeWorkTimeDesktopApp.Domain.Enums;
-using HomeWorkTimeDesktopApp.Domain.Models;
-using HomeWorkTimeDesktopApp.Infrastructure.Handlers;
+﻿using HomeWardDesktopApp.Domain.Enums;
+using HomeWardDesktopApp.Domain.Models;
+using HomeWardDesktopApp.Infrastructure.Handlers;
 using System.Windows.Threading;
 
-namespace HomeWorkTimeDesktopApp.Infrastructure.Services.WorkSessionTimer;
+namespace HomeWardDesktopApp.Infrastructure.Services.WorkSessionTimer;
 
 public sealed class WorkSessionTimer : IWorkSessionTimer
 {

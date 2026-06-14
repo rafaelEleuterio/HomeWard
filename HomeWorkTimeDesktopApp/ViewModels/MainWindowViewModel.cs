@@ -1,9 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using HomeWorkTimeDesktopApp.Domain.Enums;
-using HomeWorkTimeDesktopApp.Domain.Models;
-using HomeWorkTimeDesktopApp.Infrastructure.Handlers;
-using HomeWorkTimeDesktopApp.Infrastructure.Services.WorkSessionTimer;
+using HomeWardDesktopApp.Domain.Enums;
+using HomeWardDesktopApp.Domain.Models;
+using HomeWardDesktopApp.Infrastructure.Handlers;
+using HomeWardDesktopApp.Infrastructure.Services.WorkSessionTimer;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,7 +12,7 @@ using System.Drawing.Imaging;
 using System.Text;
 using System.Timers;
 
-namespace HomeWorkTimeDesktopApp.ViewModels;
+namespace HomeWardDesktopApp.ViewModels;
 
 public partial class MainWindowViewModel : ObservableObject, ITitleBarAware
 {

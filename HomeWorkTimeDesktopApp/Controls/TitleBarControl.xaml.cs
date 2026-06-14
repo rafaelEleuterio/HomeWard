@@ -1,4 +1,4 @@
-﻿using HomeWorkTimeDesktopApp.Infrastructure.Services.Navigation.WindowService;
+﻿using HomeWardDesktopApp.Infrastructure.Services.Navigation.WindowService;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,7 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace HomeWorkTimeDesktopApp.Controls;
+namespace HomeWardDesktopApp.Controls;
 /// <summary>
 /// Interação lógica para TitleBarControl.xam
 /// </summary>

@@ -1,7 +1,7 @@
-﻿using HomeWorkTimeDesktopApp.Domain.Enums;
-using HomeWorkTimeDesktopApp.Domain.Models;
+﻿using HomeWardDesktopApp.Domain.Enums;
+using HomeWardDesktopApp.Domain.Models;
 
-namespace HomeWorkTimeDesktopApp.Infrastructure.Services.WorkSessionTimer;
+namespace HomeWardDesktopApp.Infrastructure.Services.WorkSessionTimer;
 
 public interface IWorkSessionTimer
 {

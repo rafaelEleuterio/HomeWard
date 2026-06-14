@@ -1,4 +1,4 @@
-﻿namespace HomeWorkTimeDesktopApp.Infrastructure.Handlers;
+﻿namespace HomeWardDesktopApp.Infrastructure.Handlers;
 
 public sealed class TimerTickEventArgs : EventArgs
 {
