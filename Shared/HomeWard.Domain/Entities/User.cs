@@ -21,6 +21,7 @@ public sealed class User
 
     public string PasswordHash { get; set; } = string.Empty;
     public RoleEnum Role { get; set; } = RoleEnum.User;
+    public bool IsActive { get; set; } = true;
 
     public DateTime CreatedAt { get; set; }
 }

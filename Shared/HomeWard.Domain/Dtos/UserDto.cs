@@ -12,5 +12,6 @@ public class UserDto
     public string FirstLastName { get; set; }
     public string Email { get; set; }
     public string Username { get; set; }
+    public bool IsActive { get; set; } 
     public RoleEnum Role { get; set; }
 }
