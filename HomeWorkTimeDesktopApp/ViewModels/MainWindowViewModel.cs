@@ -33,7 +33,7 @@ public partial class MainWindowViewModel : ObservableObject
     }
     private void UpdateValues()
     {
-        WorkedTime = _timer.WorkedTime;
+        WorkedTime = _timer.BillableTime;
     }
 
     private bool CanStart => _timer.State == SessionState.NotStarted || _timer.State == SessionState.Finished;
