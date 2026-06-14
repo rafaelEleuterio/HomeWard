@@ -1,5 +1,5 @@
 <Solution>
   <Folder Name="/Applications/">
-    <Project Path="HomeWorkTimeDesktopApp/HomeWard.Desktop.csproj" />
+    <Project Path="Applications/HomeWard.Desktop/HomeWard.Desktop.csproj" />
   </Folder>
 </Solution>
