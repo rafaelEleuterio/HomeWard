@@ -1,0 +1,34 @@
+services:
+
+  postgres:
+    image: postgres:17
+    container_name: homeward-postgres
+
+    environment:
+      POSTGRES_DB: homeward
+      POSTGRES_USER: homeward
+      POSTGRES_PASSWORD: homeward
+
+    ports:
+      - "15432:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  homeward-api:
+    container_name: homeward-api
+    build:
+      context: .
+      dockerfile: Applications/HomeWard.Api/Dockerfile
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:8080
+      - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=homeward;Username=homeward;Password=homeward
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_data:

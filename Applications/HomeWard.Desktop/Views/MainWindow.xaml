@@ -8,7 +8,7 @@
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewmodels="clr-namespace:HomeWard.Desktop.ViewModels"
-    Title="{Binding MainTitle}"
+    Title="Home Ward"
     d:DataContext="{d:DesignInstance Type=viewmodels:MainWindowViewModel,
                                      IsDesignTimeCreatable=True}"
     BorderThickness="0"
@@ -29,30 +29,30 @@
                 Grid.Row="1"
                 Width="364"
                 Orientation="Vertical">
-                    <StackPanel
+                <StackPanel
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    materialDesign:RippleAssist.IsCentered="True"
+                    Orientation="Horizontal">
+                    <materialDesign:ColorZone
+                        Padding="8,4,8,4"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
-                        materialDesign:RippleAssist.IsCentered="True"
-                        Orientation="Horizontal">
-                        <materialDesign:ColorZone
-                            Padding="8,4,8,4"
+                        Panel.ZIndex="1"
+                        materialDesign:ElevationAssist.Elevation="Dp2"
+                        CornerRadius="2"
+                        Mode="Standard">
+                        <TextBlock
+                            Name="timerTextBlock"
+                            MinWidth="200"
+                            Margin="8,0,0,0"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
-                            Panel.ZIndex="1"
-                            materialDesign:ElevationAssist.Elevation="Dp2"
-                            CornerRadius="2"
-                            Mode="Standard">
-                            <TextBlock
-                                Name="timerTextBlock"
-                                MinWidth="200"
-                                Margin="8,0,0,0"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
-                                Style="{StaticResource MaterialDesignHeadline3TextBlock}"
-                                Text="{Binding Path=TotalWorkedTimeText}" />
-                        </materialDesign:ColorZone>
-                    </StackPanel>
+                            materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                            Style="{StaticResource MaterialDesignHeadline3TextBlock}"
+                            Text="{Binding Path=TotalWorkedTimeText}" />
+                    </materialDesign:ColorZone>
+                </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Button
                         Margin="8,8,8,8"
@@ -130,7 +130,7 @@
                                     FontSize="12"
                                     FontWeight="SemiBold"
                                     Text="{Binding Description}" />
-                                <Separator Background="Black"/>
+                                <Separator Background="Black" />
                             </StackPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
