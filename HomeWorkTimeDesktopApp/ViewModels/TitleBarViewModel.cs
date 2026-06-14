@@ -3,7 +3,7 @@ using System.Diagnostics;
 
 namespace HomeWorkTimeDesktopApp.ViewModels;
 
-public partial class TopMenuViewModel : ObservableObject
+public partial class TitleBarViewModel : ObservableObject
 {
     private bool _isDebbugMode = Debugger.IsAttached;
 
@@ -16,8 +16,10 @@ public partial class TopMenuViewModel : ObservableObject
     [ObservableProperty]
     private bool configVisible = false;
 
-    public TopMenuViewModel()
+    public string MainTitle { get; set; }
+    
+    public TitleBarViewModel(string mainTitle)
     {
-         
+        MainTitle = Debugger.IsAttached ? $"{mainTitle} (Debug)" : mainTitle;
     }
 }

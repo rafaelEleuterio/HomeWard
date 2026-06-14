@@ -14,7 +14,7 @@ using System.Timers;
 
 namespace HomeWorkTimeDesktopApp.ViewModels;
 
-public partial class MainWindowViewModel : ObservableObject
+public partial class MainWindowViewModel : ObservableObject, ITitleBarAware
 {
     private readonly IWorkSessionTimer _timer;
 
@@ -22,17 +22,17 @@ public partial class MainWindowViewModel : ObservableObject
     [NotifyPropertyChangedFor(nameof(TotalWorkedTimeText))]
     private TimeSpan workedTime;
     public ObservableCollection<SessionTransition> History { get; } = [];
-    public string MainTitle { get; set; }
     public string TotalWorkedTimeText { get { return $"{WorkedTime.Hours.ToString("00")}:{WorkedTime.Minutes.ToString("00")}:{WorkedTime.Seconds.ToString("00")}"; } }
-
+    public TitleBarViewModel TitleBar { get; }
 
     public MainWindowViewModel(IWorkSessionTimer timer)
     {
-        MainTitle = Debugger.IsAttached ? "HomeWorkTimeDesktopApp (Debug)" : "HomeWorkTimeDesktopApp";
         _timer = timer;
 
         _timer.Updated += UpdateValues;
         _timer.TransitionAdded += OnTransitionAdded;
+
+        TitleBar = new TitleBarViewModel("HomeWard");
     }
 
     private void UpdateValues()
@@ -52,7 +52,7 @@ public partial class MainWindowViewModel : ObservableObject
     private bool CanRest => _timer.State != SessionState.Resting && _timer.State != SessionState.Finished && _timer.State != SessionState.NotStarted;
 
 
-    [RelayCommand(CanExecute =nameof(CanStart))]
+    [RelayCommand(CanExecute = nameof(CanStart))]
     public void Start()
     {
         _timer.ChangeState(SessionState.Working);

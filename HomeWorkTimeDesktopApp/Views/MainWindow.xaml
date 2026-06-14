@@ -7,18 +7,24 @@
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewmodels="clr-namespace:HomeWorkTimeDesktopApp.ViewModels"
+    xmlns:controls="clr-namespace:HomeWorkTimeDesktopApp.Controls"
     Title="{Binding MainTitle}"
     d:DataContext="{d:DesignInstance Type=viewmodels:MainWindowViewModel,
                                      IsDesignTimeCreatable=True}"
     SizeToContent="WidthAndHeight"
+    ResizeMode="NoResize"
+    BorderThickness="0"
+    WindowStyle="None"
     mc:Ignorable="d">
     <Grid Width="Auto">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
+        <controls:TitleBarControl Grid.Row="0" DataContext="{Binding TitleBar}"/>
         <StackPanel
-            Grid.Row="0"
+            Grid.Row="1"
             Width="364"
             Orientation="Vertical">
             <materialDesign:ColorZone Padding="16" Mode="PrimaryMid">
@@ -58,8 +64,6 @@
                         Height="25"
                         Kind="Timer" />
                 </Button>
-                <!--  Click="StartTimer_Click"  -->
-                <!--  Click="StopTimer_Click"  -->
                 <Button
                     Margin="8,8,8,8"
                     Command="{Binding Path=StopCommand}"
@@ -70,7 +74,6 @@
                         Height="25"
                         Kind="TimerStop" />
                 </Button>
-                <!--  Click="ResumeTimer_Click"  -->
                 <Button
                     Margin="8,8,8,8"
                     Command="{Binding Path=ResumeCommand}"
@@ -81,7 +84,6 @@
                         Height="25"
                         Kind="TimerPlay" />
                 </Button>
-                <!--  Click="OnCoffeeBreak_Click"  -->
                 <Button
                     Margin="8,8,8,8"
                     Command="{Binding Path=RestCommand}"
@@ -92,7 +94,6 @@
                         Height="25"
                         Kind="Coffee" />
                 </Button>
-                <!--  Click="OnNonCoffeeBreak_Click"  -->
                 <Button
                     Margin="8,8,8,8"
                     Command="{Binding Path=PauseCommand}"
@@ -107,7 +108,7 @@
         </StackPanel>
         <ScrollViewer
             Name="HistoryScrollViewer"
-            Grid.Row="1"
+            Grid.Row="2"
             Width="Auto"
             Height="300"
             Background="LightGray"

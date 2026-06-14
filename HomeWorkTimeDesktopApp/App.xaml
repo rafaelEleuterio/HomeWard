@@ -9,6 +9,34 @@
                 <materialDesign:BundledTheme BaseTheme="Light" PrimaryColor="DeepPurple" SecondaryColor="Lime" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesign3.Defaults.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <Style x:Key="CloseButton" 
+               TargetType="{x:Type Button}" 
+               BasedOn="{StaticResource MaterialDesignFlatDarkBgButton}">
+
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <!-- Defina aqui a cor de fundo desejada para o Hover -->
+                        <Setter Property="Background" Value="#c4314b" />
+                        <!-- Opcional: mude a cor do texto no hover para garantir contraste -->
+                        <Setter Property="Foreground" Value="White" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+            
+            <Style x:Key="TitleBarButton" 
+               TargetType="{x:Type Button}" 
+               BasedOn="{StaticResource MaterialDesignFlatDarkBgButton}">
+
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <!-- Defina aqui a cor de fundo desejada para o Hover -->
+                        <Setter Property="Background" Value="#765ea8" />
+                        <!-- Opcional: mude a cor do texto no hover para garantir contraste -->
+                        <Setter Property="Foreground" Value="White" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
