@@ -1,8 +1,6 @@
 ﻿using HomeWard.Application.Auth;
-using HomeWard.Web.Insfrastructure;
-using Microsoft.AspNetCore.Identity.Data;
-using System.Net.Http.Json;
-namespace HomeWard.WebApp.Infrastructure.Client;
+
+namespace HomeWard.Web.Infrastructure.Client;
 
 public class AuthApiClient : IAuthApiClient
 {

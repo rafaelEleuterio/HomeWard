@@ -1,0 +1,180 @@
+﻿@page "/users"
+@using HomeWard.Application.Users
+@using Microsoft.AspNetCore.Authorization
+@using HomeWard.Domain.Dtos
+@using HomeWard.Web.Infrastructure.Client
+@attribute [Authorize]
+@inject IUserApiClient UserApiClient
+
+<PageTitle>Usuários - HomeWard</PageTitle>
+
+<h3>Usuários</h3>
+
+<button class="btn-primary" @onclick="ShowCreateForm">Novo usuário</button>
+
+@if (showCreateForm)
+{
+    <div class="create-user-form">
+        <EditForm Model="newUser" OnValidSubmit="CreateUser">
+            <DataAnnotationsValidator />
+
+            <div class="form-group">
+                <label>Nome</label>
+                <InputText @bind-Value="newUser.Username" />
+            </div>
+
+            <div class="form-group">
+                <label>Senha</label>
+                <InputText type="password" @bind-Value="newUser.Password" />
+            </div>
+
+            <div class="form-group">
+                <label>Email</label>
+                <InputText @bind-Value="newUser.FullName" />
+            </div>
+
+            <div class="form-group">
+                <label>Email</label>
+                <InputText @bind-Value="newUser.FirstLastName" />
+            </div>
+
+            <div class="form-group">
+                <label>Email</label>
+                <InputText @bind-Value="newUser.Email" />
+            </div>
+@* 
+            <div class="form-group">
+                <label>Email</label>
+                <InputText @bind-Value="newUser.RoleString" />
+            </div>
+ *@
+
+            <button type="submit" class="btn-primary">Criar</button>
+            <button type="button" class="btn-secondary" @onclick="CancelCreate">Cancelar</button>
+        </EditForm>
+    </div>
+}
+
+@if (users is null)
+{
+    <p>Carregando...</p>
+}
+else if (users.Count == 0)
+{
+    <p>Nenhum usuário cadastrado.</p>
+}
+else
+{
+    <table class="users-table">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Full Name</th>
+                <th>First and Last Name</th>
+                <th>Email</th>
+                <th>Status</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in users)
+            {
+                <tr>
+                    <td>@user.Username</td>
+                    <td>@user.FullName</td>
+                    <td>@user.FirstLastName</td>
+                    <td>@user.Email</td>
+                    <td>@(user.IsActive ? "Ativo" : "Inativo")</td>
+                    <td>
+                        @if (user.IsActive)
+                        {
+                            <button class="btn-danger" @onclick="() => ToggleStatus(user, false)">Inativar</button>
+                        }
+                        else
+                        {
+                            <button class="btn-success" @onclick="() => ToggleStatus(user, true)">Ativar</button>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<UserDto>? users;
+    private bool showCreateForm;
+    private CreateUserFormModel newUser = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadUsers();
+    }
+
+    private async Task LoadUsers()
+    {
+        var result = await UserApiClient.GetUsersAsync();
+        users = result.ToList();
+    }
+
+    private void ShowCreateForm()
+    {
+        newUser = new CreateUserFormModel();
+        showCreateForm = true;
+    }
+
+    private void CancelCreate()
+    {
+        showCreateForm = false;
+    }
+
+    private async Task CreateUser()
+    {
+        var userDto = new UserDto()
+        {
+            Id = new Guid(),
+            Username = newUser.Username,
+            Email = newUser.Email,
+            Password = newUser.Password,
+            FullName = newUser.FullName,
+            FirstLastName = newUser.FirstLastName,
+            IsActive = true,
+            // Role = Domain.Enums.RoleEnum newUser.Role
+        };
+
+        var request = new CreateUserRequest(userDto);
+        await UserApiClient.CreateUserAsync(request);
+
+        showCreateForm = false;
+        await LoadUsers();
+    }
+
+    private async Task ToggleStatus(UserDto user, bool isActive)
+    {
+        await UserApiClient.SetUserStatusAsync(user.Id, isActive);
+        await LoadUsers();
+    }
+
+    private class CreateUserFormModel
+    {
+        [System.ComponentModel.DataAnnotations.Required]
+        public string Username { get; set; } = string.Empty;
+
+        [System.ComponentModel.DataAnnotations.Required]
+        [System.ComponentModel.DataAnnotations.EmailAddress]
+        public string Email { get; set; } = string.Empty;
+
+        [System.ComponentModel.DataAnnotations.Required]
+        [System.ComponentModel.DataAnnotations.MinLength(6)]
+        public string Password { get; set; } = string.Empty;
+
+        [System.ComponentModel.DataAnnotations.Required]
+        public string FullName { get; set; } = string.Empty;
+
+        [System.ComponentModel.DataAnnotations.Required]
+        public string FirstLastName { get; set; } = string.Empty;
+
+        // [System.ComponentModel.DataAnnotations.Required]
+        // public string Role { get; set; } = string.Empty;
+    }
+}
