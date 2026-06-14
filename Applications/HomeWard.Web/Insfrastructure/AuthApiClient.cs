@@ -28,6 +28,6 @@ public class AuthApiClient : IAuthApiClient
 
         var loginResponse = await response.Content.ReadFromJsonAsync<LoginResponse>(cancellationToken);
 
-        return new LoginResult(true, loginResponse?.User);
+        return new LoginResult(true, loginResponse?.User, loginResponse?.Token);
     }
 }
