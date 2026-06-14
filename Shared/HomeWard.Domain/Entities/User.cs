@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using HomeWard.Domain.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace HomeWard.Domain.Entities;
 
@@ -19,6 +20,7 @@ public sealed class User
     public string FirstLastName { get; set; } = string.Empty;
 
     public string PasswordHash { get; set; } = string.Empty;
+    public RoleEnum Role { get; set; } = RoleEnum.User;
 
     public DateTime CreatedAt { get; set; }
 }

@@ -3,7 +3,10 @@ using HomeWard.Application.Repositories;
 using HomeWard.Infrastructure.Auth;
 using HomeWard.Infrastructure.Persistence;
 using HomeWard.Infrastructure.Repositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +26,26 @@ builder.Services.AddDbContext<HomeWardDbContext>(
             builder.Configuration
                 .GetConnectionString("Default")));
 
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidAudience = builder.Configuration["Jwt:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
+        };
+    });
+
+builder.Services.AddAuthorization();
+builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("Jwt"));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -41,6 +64,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+Console.WriteLine("JWT Key from config: " + (builder.Configuration["Jwt:Key"] ?? "NULL"));
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 

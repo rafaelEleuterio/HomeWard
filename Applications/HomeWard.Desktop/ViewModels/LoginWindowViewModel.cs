@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using HomeWard.Application.Auth;
 using HomeWard.Desktop.Domain.Models;
 using HomeWard.Desktop.Infrastructure.Client.AuthApiClient;
 using HomeWard.Desktop.Infrastructure.Services.Navigation.NavigationService;
@@ -29,7 +30,9 @@ public partial class LoginWindowViewModel : ObservableObject, ITitleBarAware
 
     public TitleBarViewModel TitleBar { get; }
 
-    public LoginWindowViewModel(IAuthApiClient authApiClient, INavigationService navigationService, IUserService userService)
+    public LoginWindowViewModel(IAuthApiClient authApiClient, 
+        INavigationService navigationService, 
+        IUserService userService)
     {
         _authApiClient = authApiClient;
         _navigationService = navigationService;
@@ -51,7 +54,7 @@ public partial class LoginWindowViewModel : ObservableObject, ITitleBarAware
         try
         {
             if (parameter is PasswordBox passwordBox)
-            {
+            {   
                 var result = await _authApiClient.LoginAsync(Username, passwordBox.Password);
 
                 if (!result.Success)
@@ -61,7 +64,7 @@ public partial class LoginWindowViewModel : ObservableObject, ITitleBarAware
                     return;
                 }
 
-                _userService.SetUser(result.User);
+                _userService.SetUser(result.User, result.Token);
             }
 
             _navigationService.NavigateTo<MainWindowViewModel>();
