@@ -60,8 +60,9 @@
                     Kind="Key" />
 
                 <PasswordBox
-                    Margin="10,0,10,0"
+                    x:Name="UserPasswordBox"
                     Grid.Column="1"
+                    Margin="10,0,10,0"
                     materialDesign:HintAssist.HelperText="Ao menos 8 caracteres"
                     materialDesign:HintAssist.Hint="Senha"
                     materialDesign:PasswordBoxAssist.Password="{Binding Password2, Mode=TwoWay}"
@@ -74,9 +75,10 @@
                 Grid.Row="3"
                 Width="100"
                 Margin="10"
+                Command="{Binding LoginCommand}"
+                CommandParameter="{Binding ElementName=UserPasswordBox}"
                 Content="Login"
                 Style="{StaticResource MaterialDesignRaisedDarkButton}"
-                Command="{Binding LoginCommand}"
                 ToolTip="MaterialDesignFlatDarkButton" />
         </Grid>
 

@@ -21,35 +21,35 @@
         BorderBrush="{DynamicResource MaterialDesign.Brush.Primary.Dark}"
         BorderThickness="0"
         MouseLeftButtonDown="Border_MouseLeftButtonDown">
-        <DockPanel LastChildFill="False" VerticalAlignment="Center">
+        <DockPanel VerticalAlignment="Center" LastChildFill="False">
             <TextBlock
                 Margin="10,0,0,0"
-                DockPanel.Dock="Left"
                 VerticalAlignment="Center"
+                DockPanel.Dock="Left"
                 FontSize="16"
                 FontWeight="Bold"
                 Foreground="{DynamicResource MaterialDesign.Brush.Primary.Dark.Foreground}"
                 Text="{Binding MainTitle}" />
 
             <Button
+                Height="40"
                 Command="{Binding CloseCommand}"
                 DockPanel.Dock="Right"
-                Height="40"
                 Style="{StaticResource CloseButton}"
                 Visibility="{Binding CloseVisible, Converter={StaticResource BoolToVisibility}}">
                 <materialDesign:PackIcon Kind="Close" />
             </Button>
             <Button
+                Height="40"
                 Command="{Binding MaximizeCommand}"
                 DockPanel.Dock="Right"
-                Height="40"
                 Style="{StaticResource TitleBarButton}"
                 Visibility="{Binding MaximizeVisible, Converter={StaticResource BoolToVisibility}}">
                 <materialDesign:PackIcon Kind="WindowMaximize" />
             </Button>
             <Button
-                Command="{Binding MinimizeCommand}"
                 Height="40"
+                Command="{Binding MinimizeCommand}"
                 DockPanel.Dock="Right"
                 Style="{StaticResource TitleBarButton}"
                 Visibility="{Binding MinimizeVisible, Converter={StaticResource BoolToVisibility}}">

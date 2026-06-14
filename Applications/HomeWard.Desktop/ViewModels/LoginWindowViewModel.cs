@@ -3,6 +3,8 @@ using CommunityToolkit.Mvvm.Input;
 using HomeWard.Desktop.Domain.Models;
 using HomeWard.Desktop.Infrastructure.Client.AuthApiClient;
 using HomeWard.Desktop.Infrastructure.Services.Navigation.NavigationService;
+using System.Security;
+using System.Windows.Controls;
 
 namespace HomeWard.Desktop.ViewModels;
 
@@ -13,7 +15,7 @@ public partial class LoginWindowViewModel : ObservableObject, ITitleBarAware
     private readonly INavigationService _navigationService;
 
     [ObservableProperty]
-    private string email = string.Empty;
+    private string username = string.Empty;
 
     [ObservableProperty]
     private string password = string.Empty;
@@ -38,7 +40,7 @@ public partial class LoginWindowViewModel : ObservableObject, ITitleBarAware
 
 
     [RelayCommand]
-    private async Task LoginAsync()
+    private async Task LoginAsync(object parameter)
     {
         IsBusy = true;
 
@@ -46,13 +48,16 @@ public partial class LoginWindowViewModel : ObservableObject, ITitleBarAware
 
         try
         {
-            var result = await _authApiClient.LoginAsync(Email, Password);
-
-            if (!result.Success)
+            if (parameter is PasswordBox passwordBox)
             {
-                ErrorMessage = result.ErrorMessage ?? "Login failed.";
+                var result = await _authApiClient.LoginAsync(Username, passwordBox.Password);
 
-                return;
+                if (!result.Success)
+                {
+                    ErrorMessage = result.ErrorMessage ?? "Login failed.";
+
+                    return;
+                }
             }
 
             _navigationService.NavigateTo<MainWindowViewModel>();

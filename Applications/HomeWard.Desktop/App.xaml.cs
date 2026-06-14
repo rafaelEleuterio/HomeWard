@@ -60,7 +60,7 @@ public partial class App : Application
         services.AddSingleton<IActivatorWindow, ActivatorWindow>();
         services.AddSingleton<IWindowService, WindowService>();
         services.AddSingleton<INavigationService, NavigationService>();
-        services.AddHttpClient<IAuthApiClient, AuthApiClient>(client => { client.BaseAddress = new Uri("https://localhost:7295/"); });
+        services.AddHttpClient<IAuthApiClient, AuthApiClient>(client => { client.BaseAddress = new Uri("http://localhost:8080/"); });
     }
 
     private static void RegisterViewModels(IServiceCollection services)
