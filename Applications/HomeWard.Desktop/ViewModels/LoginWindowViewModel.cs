@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using HomeWard.Desktop.Domain.Models;
 using HomeWard.Desktop.Infrastructure.Client.AuthApiClient;
 using HomeWard.Desktop.Infrastructure.Services.Navigation.NavigationService;
+using HomeWard.Desktop.Infrastructure.Services.UserService;
 using System.Security;
 using System.Windows.Controls;
 
@@ -11,8 +12,8 @@ namespace HomeWard.Desktop.ViewModels;
 public partial class LoginWindowViewModel : ObservableObject, ITitleBarAware
 {
     private readonly IAuthApiClient _authApiClient;
-
     private readonly INavigationService _navigationService;
+    private readonly IUserService _userService;
 
     [ObservableProperty]
     private string username = string.Empty;
@@ -28,10 +29,11 @@ public partial class LoginWindowViewModel : ObservableObject, ITitleBarAware
 
     public TitleBarViewModel TitleBar { get; }
 
-    public LoginWindowViewModel(IAuthApiClient authApiClient, INavigationService navigationService)
+    public LoginWindowViewModel(IAuthApiClient authApiClient, INavigationService navigationService, IUserService userService)
     {
         _authApiClient = authApiClient;
         _navigationService = navigationService;
+        _userService = userService;
 
         TitleBar = new TitleBarViewModel("Login");
         TitleBar.MaximizeVisible = false;
@@ -58,9 +60,16 @@ public partial class LoginWindowViewModel : ObservableObject, ITitleBarAware
 
                     return;
                 }
+
+                _userService.SetUser(result.User);
             }
 
             _navigationService.NavigateTo<MainWindowViewModel>();
+            _navigationService.Close<LoginWindowViewModel>();
+        }
+        catch(Exception ex)
+        {
+            ErrorMessage = ex.Message;
         }
         finally
         {

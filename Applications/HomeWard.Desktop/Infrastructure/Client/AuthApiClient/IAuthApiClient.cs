@@ -1,4 +1,4 @@
-﻿using HomeWard.Desktop.Domain.Records;
+﻿using HomeWard.Application.Auth;
 
 namespace HomeWard.Desktop.Infrastructure.Client.AuthApiClient;
 

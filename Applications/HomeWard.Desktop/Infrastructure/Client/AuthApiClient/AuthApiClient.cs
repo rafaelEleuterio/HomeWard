@@ -1,4 +1,4 @@
-﻿using HomeWard.Desktop.Domain.Records;
+﻿using HomeWard.Application.Auth;
 using System.Net.Http;
 using System.Net.Http.Json;
 
@@ -13,21 +13,21 @@ public sealed class AuthApiClient : IAuthApiClient
         _httpClient = httpClient;
     }
 
-    public async Task<LoginResult> LoginAsync(string email, string password, CancellationToken cancellationToken = default)
+    public async Task<LoginResult> LoginAsync(string username, string password, CancellationToken cancellationToken = default)
     {
-        var request = new LoginRequest(email, password);
+        var request = new LoginRequest(username, password);
 
         var response = await _httpClient.PostAsJsonAsync("api/auth/login", request, cancellationToken);
 
         if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
         {
-            return new LoginResult(false, "Email ou senha inválidos.", null);
+            return new LoginResult(false, null, "Email ou senha inválidos.");
         }
 
         response.EnsureSuccessStatusCode();
 
-        var user = await response.Content.ReadFromJsonAsync<LoginResponse>(cancellationToken);
+        var loginResponse = await response.Content.ReadFromJsonAsync<LoginResponse>(cancellationToken);
 
-        return new LoginResult(true, null, user);
+        return new LoginResult(true, loginResponse.User, null);
     }
 }

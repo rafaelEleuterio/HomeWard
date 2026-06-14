@@ -13,5 +13,6 @@ public interface IWorkSessionTimer
     
     event Action? Updated;
     event Action<SessionTransition>? TransitionAdded;
-    void ChangeState(SessionState state);
+    event Action? StateChanged;
+    void ChangeState(SessionState state); 
 }

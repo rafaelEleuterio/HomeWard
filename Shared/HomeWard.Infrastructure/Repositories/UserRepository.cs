@@ -14,6 +14,11 @@ public sealed class UserRepository : IUserRepository
         _db = db;
     }
 
+    public Task<User?> GetByUsernameAsync(string username, CancellationToken cancellationToken)
+    {
+        return _db.Users.FirstOrDefaultAsync(x => x.Username == username, cancellationToken);
+    }
+
     public Task<User?> GetByEmailAsync(string email, CancellationToken cancellationToken)
     {
         return _db.Users.FirstOrDefaultAsync(x => x.Email == email, cancellationToken);

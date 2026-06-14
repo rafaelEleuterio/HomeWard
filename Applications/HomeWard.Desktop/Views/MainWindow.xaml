@@ -15,6 +15,7 @@
     ResizeMode="NoResize"
     SizeToContent="WidthAndHeight"
     WindowStyle="None"
+    WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <Border Background="{DynamicResource MaterialDesign.Brush.Primary}">
 
