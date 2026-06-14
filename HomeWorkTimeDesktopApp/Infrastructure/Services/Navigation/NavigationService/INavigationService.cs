@@ -1,4 +1,4 @@
-﻿namespace HomeWardDesktopApp.Infrastructure.Services.Navigation.NavigationService;
+﻿namespace HomeWard.Desktop.Infrastructure.Services.Navigation.NavigationService;
 
 public interface INavigationService
 {

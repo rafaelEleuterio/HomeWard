@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace HomeWardDesktopApp.Infrastructure.Services.Navigation.NavigationService;
+namespace HomeWard.Desktop.Infrastructure.Services.Navigation.NavigationService;
 
 public sealed class ViewRegistry
 {

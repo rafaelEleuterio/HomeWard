@@ -1,7 +1,7 @@
-﻿using HomeWardDesktopApp.Domain.Enums;
-using HomeWardDesktopApp.Extensions;
+﻿using HomeWard.Desktop.Domain.Enums;
+using HomeWard.Desktop.Extensions;
 
-namespace HomeWardDesktopApp.Domain.Models;
+namespace HomeWard.Desktop.Domain.Models;
 
 public class SessionTransition
 {

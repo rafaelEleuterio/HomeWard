@@ -1,4 +1,4 @@
-﻿namespace HomeWardDesktopApp.Infrastructure.Services.Navigation.WindowService;
+﻿namespace HomeWard.Desktop.Infrastructure.Services.Navigation.WindowService;
 
 public interface IWindowService
 {

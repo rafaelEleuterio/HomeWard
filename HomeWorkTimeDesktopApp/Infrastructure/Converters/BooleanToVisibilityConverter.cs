@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Data;
 
-namespace HomeWardDesktopApp.Infrastructure.Converters;
+namespace HomeWard.Desktop.Infrastructure.Converters;
 
 public class BooleanToVisibilityConverter : IValueConverter
 {

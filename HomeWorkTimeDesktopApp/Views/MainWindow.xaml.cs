@@ -1,8 +1,8 @@
-﻿using HomeWardDesktopApp.ViewModels;
+﻿using HomeWard.Desktop.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace HomeWardDesktopApp.Views;
+namespace HomeWard.Desktop.Views;
 /// <summary>
 /// Interaction logic for MainWindow.xaml
 /// </summary>

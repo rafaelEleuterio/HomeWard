@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Reflection;
 
-namespace HomeWardDesktopApp.Extensions;
+namespace HomeWard.Desktop.Extensions;
 
 public static class EnumExtensions
 {

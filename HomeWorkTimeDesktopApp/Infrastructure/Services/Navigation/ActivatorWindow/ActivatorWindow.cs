@@ -1,8 +1,8 @@
-﻿using HomeWardDesktopApp.Infrastructure.Services.Navigation.NavigationService;
+﻿using HomeWard.Desktop.Infrastructure.Services.Navigation.NavigationService;
 using Microsoft.Extensions.DependencyInjection;
 using System.Windows;
 
-namespace HomeWardDesktopApp.Infrastructure.Services.Navigation.ActivatorWindow;
+namespace HomeWard.Desktop.Infrastructure.Services.Navigation.ActivatorWindow;
 
 public sealed class ActivatorWindow : IActivatorWindow
 {

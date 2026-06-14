@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace HomeWardDesktopApp.ViewModels;
+namespace HomeWard.Desktop.ViewModels;
 
 internal class SettingsWindowViewModel
 {

@@ -10,7 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace HomeWardDesktopApp.Views;
+namespace HomeWard.Desktop.Views;
 /// <summary>
 /// Lógica interna para SettingsWindow.xaml
 /// </summary>

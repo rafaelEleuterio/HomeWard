@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace HomeWardDesktopApp.Infrastructure.Services.Navigation.ActivatorWindow;
+namespace HomeWard.Desktop.Infrastructure.Services.Navigation.ActivatorWindow;
 
 public interface IActivatorWindow
 {
