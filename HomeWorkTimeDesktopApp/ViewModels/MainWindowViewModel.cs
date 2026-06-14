@@ -1,14 +1,16 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using HomeWorkTimeDesktopApp.Domain.Enums;
+using HomeWorkTimeDesktopApp.Domain.Models;
+using HomeWorkTimeDesktopApp.Infrastructure.Handlers;
+using HomeWorkTimeDesktopApp.Infrastructure.Services.WorkSessionTimer;
 using System;
-using System.Timers;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Drawing.Imaging;
 using System.Text;
-using HomeWorkTimeDesktopApp.Infrastructure.Services.WorkSessionTimer;
-using HomeWorkTimeDesktopApp.Infrastructure.Handlers;
-using CommunityToolkit.Mvvm.Input;
-using HomeWorkTimeDesktopApp.Domain.Enums;
+using System.Timers;
 
 namespace HomeWorkTimeDesktopApp.ViewModels;
 
@@ -18,8 +20,8 @@ public partial class MainWindowViewModel : ObservableObject
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(TotalWorkedTimeText))]
-    private TimeSpan workedTime; 
-
+    private TimeSpan workedTime;
+    public ObservableCollection<SessionTransition> History { get; } = [];
     public string MainTitle { get; set; }
     public string TotalWorkedTimeText { get { return $"{WorkedTime.Hours.ToString("00")}:{WorkedTime.Minutes.ToString("00")}:{WorkedTime.Seconds.ToString("00")}"; } }
 
@@ -30,10 +32,17 @@ public partial class MainWindowViewModel : ObservableObject
         _timer = timer;
 
         _timer.Updated += UpdateValues;
+        _timer.TransitionAdded += OnTransitionAdded;
     }
+
     private void UpdateValues()
     {
         WorkedTime = _timer.BillableTime;
+    }
+
+    private void OnTransitionAdded(SessionTransition transition)
+    {
+        History.Add(transition);
     }
 
     private bool CanStart => _timer.State == SessionState.NotStarted || _timer.State == SessionState.Finished;
