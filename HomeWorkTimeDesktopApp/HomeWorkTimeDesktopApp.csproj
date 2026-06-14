@@ -18,7 +18,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controls\" />
     <Folder Include="Infrastructure\Behaviors\" />
     <Folder Include="Commands\" />
   </ItemGroup>
