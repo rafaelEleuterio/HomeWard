@@ -4,8 +4,6 @@ namespace HomeWorkTimeDesktopApp.Infrastructure.Services.Navigation.ActivatorWin
 
 public interface IActivatorWindow
 {
-    Window CreateWindow<TViewModel>()
-        where TViewModel : class;
-
+    Window CreateWindow<TViewModel>() where TViewModel : class;
     Window CreateWindow(Type viewModelType);
 }
