@@ -32,9 +32,10 @@ public sealed class WorkSessionTimer : IWorkSessionTimer
 
     public SessionState State => _session.State;
 
+    public TimeSpan BillableTime => _session.BillableTime;
     public TimeSpan WorkedTime => _session.WorkedTime;
 
-    public TimeSpan RestTime => _session.RestTime;
+    public TimeSpan RestedTime => _session.RestedTime;
 
     public TimeSpan PausedTime => _session.PausedTime;
 
@@ -69,11 +70,13 @@ public sealed class WorkSessionTimer : IWorkSessionTimer
         switch (_session.State)
         {
             case SessionState.Working:
+                _session.BillableTime += elapsed;
                 _session.WorkedTime += elapsed;
                 break;
 
             case SessionState.Resting:
-                _session.RestTime += elapsed;
+                _session.BillableTime += elapsed;
+                _session.RestedTime += elapsed;
                 break;
 
             case SessionState.Paused:

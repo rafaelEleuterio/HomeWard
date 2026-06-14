@@ -6,9 +6,10 @@ public interface IWorkSessionTimer
 {
     SessionState State { get; }
 
+    TimeSpan BillableTime { get; }
     TimeSpan WorkedTime { get; }
 
-    TimeSpan RestTime { get; }
+    TimeSpan RestedTime { get; }
 
     TimeSpan PausedTime { get; }
 
