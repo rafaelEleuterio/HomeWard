@@ -1,7 +1,9 @@
-﻿namespace HomeWard.Application.Auth;
+﻿using HomeWard.Domain.Dtos;
 
-public sealed record RegisterUserRequest(string Email, string Password);
-public sealed record RegisterUserResponse(Guid UserId, string Email);
-public sealed record LoginResponse(Guid UserId, string Email);
-public sealed record LoginRequest(string Email, string Password);
-public sealed record LoginResult(bool Success, LoginResponse? Response, string ErrorMessage = null);
+namespace HomeWard.Application.Auth;
+
+public sealed record RegisterUserRequest(UserDto User, string Password);
+public sealed record RegisterUserResponse(UserDto User);
+public sealed record LoginResponse(UserDto User);
+public sealed record LoginRequest(string Username, string Password);
+public sealed record LoginResult(bool Success, UserDto? User, string ErrorMessage = null);

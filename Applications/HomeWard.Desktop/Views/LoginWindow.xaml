@@ -13,6 +13,7 @@
     d:DataContext="{d:DesignInstance Type=viewmodels:LoginWindowViewModel,
                                      IsDesignTimeCreatable=True}"
     ResizeMode="NoResize"
+    WindowStartupLocation="CenterScreen"
     SizeToContent="Height"
     WindowStyle="None"
     mc:Ignorable="d">
