@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HomeWorkTimeDesktopApp.Infrastructure.Services.Navigation.WindowService;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -20,6 +21,16 @@ public partial class TitleBarControl : UserControl
     public TitleBarControl()
     {
         InitializeComponent();
+
+        DataContextChanged += OnDataContextChanged;
+    }
+
+    private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+    {
+        if (e.NewValue is IWindowAware windowAware)
+        {
+            windowAware.Window = Window.GetWindow(this);
+        }
     }
 
     private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
