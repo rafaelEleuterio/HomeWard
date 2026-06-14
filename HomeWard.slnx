@@ -3,6 +3,9 @@
     <Project Path="Applications/HomeWard.Api/HomeWard.Api.csproj" Id="817f2a55-c6a2-48a0-86ef-9aac5e62b6dd" />
     <Project Path="Applications/HomeWard.Desktop/HomeWard.Desktop.csproj" />
   </Folder>
+  <Folder Name="/Itens de Solução/">
+    <File Path="docker-compose.yml" />
+  </Folder>
   <Folder Name="/Shared/">
     <Project Path="Shared/HomeWard.Application/HomeWard.Application.csproj" Id="fc18a0dd-3775-497b-ab0b-b0ba291fd998" />
     <Project Path="Shared/HomeWard.Domain/HomeWard.Domain.csproj" Id="6e667929-87b4-4117-878a-f5518ea27f94" />

@@ -1,4 +1,5 @@
-﻿using HomeWard.Desktop.Infrastructure.Services.Navigation.ActivatorWindow;
+﻿using HomeWard.Desktop.Infrastructure.Client.AuthApiClient;
+using HomeWard.Desktop.Infrastructure.Services.Navigation.ActivatorWindow;
 using HomeWard.Desktop.Infrastructure.Services.Navigation.NavigationService;
 using HomeWard.Desktop.Infrastructure.Services.Navigation.WindowService;
 using HomeWard.Desktop.Infrastructure.Services.WorkSessionTimer;
@@ -36,7 +37,7 @@ public partial class App : Application
     {
         await _host.StartAsync();
 
-        var mainWindow = _host.Services.GetRequiredService<MainWindow>();
+        var mainWindow = _host.Services.GetRequiredService<LoginWindow>();
 
         mainWindow.Show();
 
@@ -59,22 +60,26 @@ public partial class App : Application
         services.AddSingleton<IActivatorWindow, ActivatorWindow>();
         services.AddSingleton<IWindowService, WindowService>();
         services.AddSingleton<INavigationService, NavigationService>();
+        services.AddHttpClient<IAuthApiClient, AuthApiClient>(client => { client.BaseAddress = new Uri("https://localhost:7295/"); });
     }
 
     private static void RegisterViewModels(IServiceCollection services)
     {
         services.AddTransient<MainWindowViewModel>();
+        services.AddTransient<LoginWindowViewModel>();
     }
 
     private static void RegisterViews(IServiceCollection services)
     {
         services.AddTransient<MainWindow>();
+        services.AddTransient<LoginWindow>();
 
         services.AddSingleton(sp =>
         {
             var registry = new ViewRegistry();
 
             registry.Register<MainWindowViewModel, MainWindow>();
+            registry.Register<LoginWindowViewModel, LoginWindow>();
             registry.Register<SettingsWindowViewModel, SettingsWindow>();
 
             return registry;
