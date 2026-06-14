@@ -1,14 +1,14 @@
-﻿using HomeWardDesktopApp.Infrastructure.Services.Navigation.ActivatorWindow;
-using HomeWardDesktopApp.Infrastructure.Services.Navigation.NavigationService;
-using HomeWardDesktopApp.Infrastructure.Services.Navigation.WindowService;
-using HomeWardDesktopApp.Infrastructure.Services.WorkSessionTimer;
-using HomeWardDesktopApp.ViewModels;
-using HomeWardDesktopApp.Views;
+﻿using HomeWard.Desktop.Infrastructure.Services.Navigation.ActivatorWindow;
+using HomeWard.Desktop.Infrastructure.Services.Navigation.NavigationService;
+using HomeWard.Desktop.Infrastructure.Services.Navigation.WindowService;
+using HomeWard.Desktop.Infrastructure.Services.WorkSessionTimer;
+using HomeWard.Desktop.ViewModels;
+using HomeWard.Desktop.Views;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Windows;
 
-namespace HomeWardDesktopApp;
+namespace HomeWard.Desktop;
 /// <summary>
 /// Interaction logic for App.xaml
 /// </summary>

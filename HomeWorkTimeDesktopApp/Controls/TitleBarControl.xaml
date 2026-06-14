@@ -1,10 +1,10 @@
 ﻿<UserControl
-    x:Class="HomeWardDesktopApp.Controls.TitleBarControl"
+    x:Class="HomeWard.Desktop.Controls.TitleBarControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:converters="clr-namespace:HomeWardDesktopApp.Infrastructure.Converters"
+    xmlns:converters="clr-namespace:HomeWard.Desktop.Infrastructure.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:HomeWardDesktopApp.Controls"
+    xmlns:local="clr-namespace:HomeWard.Desktop.Controls"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="450"

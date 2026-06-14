@@ -1,13 +1,13 @@
 ﻿<Window
-    x:Class="HomeWardDesktopApp.Views.MainWindow"
+    x:Class="HomeWard.Desktop.Views.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="clr-namespace:HomeWardDesktopApp.Controls"
+    xmlns:controls="clr-namespace:HomeWard.Desktop.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:HomeWardDesktopApp"
+    xmlns:local="clr-namespace:HomeWard.Desktop"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:viewmodels="clr-namespace:HomeWardDesktopApp.ViewModels"
+    xmlns:viewmodels="clr-namespace:HomeWard.Desktop.ViewModels"
     Title="{Binding MainTitle}"
     d:DataContext="{d:DesignInstance Type=viewmodels:MainWindowViewModel,
                                      IsDesignTimeCreatable=True}"

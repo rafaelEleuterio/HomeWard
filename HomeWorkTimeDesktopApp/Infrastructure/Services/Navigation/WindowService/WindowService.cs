@@ -1,10 +1,10 @@
-﻿using HomeWardDesktopApp.Infrastructure.Services.Navigation.ActivatorWindow;
+﻿using HomeWard.Desktop.Infrastructure.Services.Navigation.ActivatorWindow;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 
-namespace HomeWardDesktopApp.Infrastructure.Services.Navigation.WindowService;
+namespace HomeWard.Desktop.Infrastructure.Services.Navigation.WindowService;
 
 public sealed class WindowService : IWindowService
 {
