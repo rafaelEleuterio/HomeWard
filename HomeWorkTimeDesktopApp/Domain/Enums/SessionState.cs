@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace HomeWorkTimeDesktopApp.Domain.Enums;
+namespace HomeWardDesktopApp.Domain.Enums;
 
 public enum SessionState
 {

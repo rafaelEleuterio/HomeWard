@@ -1,10 +1,10 @@
-﻿using HomeWorkTimeDesktopApp.Infrastructure.Services.Navigation.ActivatorWindow;
+﻿using HomeWardDesktopApp.Infrastructure.Services.Navigation.ActivatorWindow;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 
-namespace HomeWorkTimeDesktopApp.Infrastructure.Services.Navigation.WindowService;
+namespace HomeWardDesktopApp.Infrastructure.Services.Navigation.WindowService;
 
 public sealed class WindowService : IWindowService
 {

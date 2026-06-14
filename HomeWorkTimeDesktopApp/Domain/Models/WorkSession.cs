@@ -1,6 +1,6 @@
-﻿using HomeWorkTimeDesktopApp.Domain.Enums;
+﻿using HomeWardDesktopApp.Domain.Enums;
 
-namespace HomeWorkTimeDesktopApp.Domain.Models;
+namespace HomeWardDesktopApp.Domain.Models;
 
 public sealed class WorkSession
 {

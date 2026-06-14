@@ -1,10 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using HomeWorkTimeDesktopApp.Infrastructure.Services.Navigation.WindowService;
+using HomeWardDesktopApp.Infrastructure.Services.Navigation.WindowService;
 using System.Diagnostics;
 using System.Windows;
 
-namespace HomeWorkTimeDesktopApp.ViewModels;
+namespace HomeWardDesktopApp.ViewModels;
 
 public partial class TitleBarViewModel : ObservableObject, IWindowAware
 {

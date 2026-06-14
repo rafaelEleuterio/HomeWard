@@ -1,6 +1,6 @@
-﻿using HomeWorkTimeDesktopApp.ViewModels;
+﻿using HomeWardDesktopApp.ViewModels;
 
-namespace HomeWorkTimeDesktopApp.Domain.Models;
+namespace HomeWardDesktopApp.Domain.Models;
 
 public interface ITitleBarAware
 {

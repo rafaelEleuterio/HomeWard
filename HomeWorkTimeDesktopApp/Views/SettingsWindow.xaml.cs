@@ -10,7 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace HomeWorkTimeDesktopApp.Views;
+namespace HomeWardDesktopApp.Views;
 /// <summary>
 /// Lógica interna para SettingsWindow.xaml
 /// </summary>

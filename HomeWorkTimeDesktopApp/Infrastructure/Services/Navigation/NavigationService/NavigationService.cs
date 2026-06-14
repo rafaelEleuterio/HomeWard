@@ -1,7 +1,7 @@
-﻿using HomeWorkTimeDesktopApp.Infrastructure.Services.Navigation.ActivatorWindow;
-using HomeWorkTimeDesktopApp.Infrastructure.Services.Navigation.WindowService;
+﻿using HomeWardDesktopApp.Infrastructure.Services.Navigation.ActivatorWindow;
+using HomeWardDesktopApp.Infrastructure.Services.Navigation.WindowService;
 
-namespace HomeWorkTimeDesktopApp.Infrastructure.Services.Navigation.NavigationService;
+namespace HomeWardDesktopApp.Infrastructure.Services.Navigation.NavigationService;
 
 public sealed class NavigationService : INavigationService
 {
