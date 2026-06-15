@@ -1,4 +1,5 @@
 ﻿using H.NotifyIcon;
+using HomeWard.Application.Auth;
 using HomeWard.Desktop.Infrastructure.Client.AuthApiClient;
 using HomeWard.Desktop.Infrastructure.Services.Navigation.ActivatorWindow;
 using HomeWard.Desktop.Infrastructure.Services.Navigation.NavigationService;
@@ -64,7 +65,9 @@ public partial class App : System.Windows.Application
         services.AddSingleton<IWindowService, WindowService>();
         services.AddSingleton<INavigationService, NavigationService>();
         services.AddSingleton<IUserService, UserService>();
-        services.AddHttpClient<IAuthApiClient, AuthApiClient>(client => { client.BaseAddress = new Uri("http://localhost:8080/"); });
+        services.AddTransient<AuthHeaderHandler>();
+        services.AddHttpClient<IAuthApiClient, AuthApiClient>(client => { client.BaseAddress = new Uri("http://localhost:8080/"); })
+            .AddHttpMessageHandler<AuthHeaderHandler>();
     }
 
     private static void RegisterViewModels(IServiceCollection services)

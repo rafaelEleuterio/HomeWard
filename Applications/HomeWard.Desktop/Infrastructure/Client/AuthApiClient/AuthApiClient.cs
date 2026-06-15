@@ -21,13 +21,13 @@ public sealed class AuthApiClient : IAuthApiClient
 
         if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
         {
-            return new LoginResult(false, null, "Email ou senha inválidos.");
+            return new LoginResult(false, null, null, "Email ou senha inválidos.");
         }
 
         response.EnsureSuccessStatusCode();
 
         var loginResponse = await response.Content.ReadFromJsonAsync<LoginResponse>(cancellationToken);
 
-        return new LoginResult(true, loginResponse.User, null);
+        return new LoginResult(true, loginResponse.User, loginResponse.Token, null);
     }
 }

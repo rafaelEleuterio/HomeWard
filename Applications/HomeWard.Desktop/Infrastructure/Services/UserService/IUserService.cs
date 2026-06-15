@@ -8,8 +8,9 @@ namespace HomeWard.Desktop.Infrastructure.Services.UserService;
 public interface IUserService
 {
     UserDto? User { get; }
+    string? Token { get; }
     bool IsAuthenticated { get; }
     event EventHandler? UserChanged;
-    void SetUser(UserDto user);
+    void SetUser(UserDto user, string token);
     void Clear();
 }
