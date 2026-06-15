@@ -27,6 +27,15 @@ public class UserApiClient : IUserApiClient
         return user!;
     }
 
+    public async Task<UserDto> UpdateUserAsync(UserDto userDto, CancellationToken cancellationToken = default)
+    {
+        var response = await _httpClient.PutAsJsonAsync("api/users", userDto, cancellationToken);
+        response.EnsureSuccessStatusCode();
+
+        var user = await response.Content.ReadFromJsonAsync<UserDto>(cancellationToken);
+        return user!;
+    }
+
     public async Task SetUserStatusAsync(Guid userId, bool isActive, CancellationToken cancellationToken = default)
     {
         var request = new UpdateUserStatusRequest(userId, isActive);

@@ -1,4 +1,5 @@
-﻿using HomeWard.Application.Repositories;
+﻿using HomeWard.Application;
+using HomeWard.Application.Repositories;
 using HomeWard.Domain.Dtos;
 using HomeWard.Domain.Entities;
 using HomeWard.Infrastructure.Persistence;
@@ -14,12 +15,46 @@ public sealed class UserRepository : IUserRepository
     {
         _db = db;
     }
+    public async Task SaveChanges(CancellationToken cancellationToken) => await _db.SaveChangesAsync(cancellationToken);
 
     public Task<User?> GetByUsernameAsync(string username, CancellationToken cancellationToken)
     {
         return _db.Users.FirstOrDefaultAsync(x => x.Username == username, cancellationToken);
     }
-   
+
+    public async Task<Result> UpdateAsync(UserDto userDto, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var user = await _db.Users.FirstOrDefaultAsync(x => x.Id == userDto.Id, cancellationToken);
+
+            if (user is null)
+            {
+                return new Result(false, "Usuário não encontrado");
+            }
+
+            user.Username = userDto.Username;
+            user.FirstLastName = userDto.FirstLastName;
+            user.FullName = userDto.FullName;
+            user.IsActive = userDto.IsActive;
+            user.Email = userDto.Email;
+            user.Role = userDto.Role;
+
+            await _db.SaveChangesAsync(cancellationToken);
+
+            return new Result(true);
+        }
+        catch (Exception ex)
+        {
+            return new Result(false, ex.Message);
+        }
+    }
+
+    public Task<User?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+    {
+        return _db.Users.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+    }
+
     public async Task<User> CreateAsync(UserDto userDto, CancellationToken cancellationToken)
     {
         var user = new User()

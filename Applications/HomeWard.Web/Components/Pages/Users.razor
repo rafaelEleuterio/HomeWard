@@ -1,110 +1,112 @@
 ﻿@page "/users"
-@using HomeWard.Application.Users
+@attribute [Authorize(Roles = "Director,Manager")]
 @using Microsoft.AspNetCore.Authorization
+@using HomeWard.Application.Users
 @using HomeWard.Domain.Dtos
+@using HomeWard.Domain.Enums
 @using HomeWard.Web.Infrastructure.Client
-@attribute [Authorize]
 @inject IUserApiClient UserApiClient
 
 <PageTitle>Usuários - HomeWard</PageTitle>
 
-<h3>Usuários</h3>
+<h1>Usuários</h1>
 
-<button class="btn-primary" @onclick="ShowCreateForm">Novo usuário</button>
-
-@if (showCreateForm)
+@if (rows is null)
 {
-    <div class="create-user-form">
-        <EditForm Model="newUser" OnValidSubmit="CreateUser">
-            <DataAnnotationsValidator />
-
-            <div class="form-group">
-                <label>Nome</label>
-                <InputText @bind-Value="newUser.Username" />
-            </div>
-
-            <div class="form-group">
-                <label>Senha</label>
-                <InputText type="password" @bind-Value="newUser.Password" />
-            </div>
-
-            <div class="form-group">
-                <label>Email</label>
-                <InputText @bind-Value="newUser.FullName" />
-            </div>
-
-            <div class="form-group">
-                <label>Email</label>
-                <InputText @bind-Value="newUser.FirstLastName" />
-            </div>
-
-            <div class="form-group">
-                <label>Email</label>
-                <InputText @bind-Value="newUser.Email" />
-            </div>
-@* 
-            <div class="form-group">
-                <label>Email</label>
-                <InputText @bind-Value="newUser.RoleString" />
-            </div>
- *@
-
-            <button type="submit" class="btn-primary">Criar</button>
-            <button type="button" class="btn-secondary" @onclick="CancelCreate">Cancelar</button>
-        </EditForm>
-    </div>
-}
-
-@if (users is null)
-{
-    <p>Carregando...</p>
-}
-else if (users.Count == 0)
-{
-    <p>Nenhum usuário cadastrado.</p>
+    <p class="loading">Carregando usuários...</p>
 }
 else
 {
-    <table class="users-table">
-        <thead>
-            <tr>
-                <th>Nome</th>
-                <th>Full Name</th>
-                <th>First and Last Name</th>
-                <th>Email</th>
-                <th>Status</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var user in users)
-            {
-                <tr>
-                    <td>@user.Username</td>
-                    <td>@user.FullName</td>
-                    <td>@user.FirstLastName</td>
-                    <td>@user.Email</td>
-                    <td>@(user.IsActive ? "Ativo" : "Inativo")</td>
-                    <td>
-                        @if (user.IsActive)
-                        {
-                            <button class="btn-danger" @onclick="() => ToggleStatus(user, false)">Inativar</button>
-                        }
-                        else
-                        {
-                            <button class="btn-success" @onclick="() => ToggleStatus(user, true)">Ativar</button>
-                        }
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <div class="users-grid">
+        <div class="grid-header">Nome</div>
+        <div class="grid-header">Sobrenome</div>
+        <div class="grid-header">Usuário</div>
+        <div class="grid-header">Email</div>
+        <div class="grid-header">Senha</div>
+        <div class="grid-header">Cargo</div>
+        <div class="grid-header">Ativo</div>
+        <div class="grid-header grid-header--actions">Ações</div>
+
+        @foreach (var row in rows)
+        {
+            <div class="grid-cell">
+                <input class="grid-input" @bind="row.FirstLastName" />
+            </div>
+            <div class="grid-cell">
+                <input class="grid-input" @bind="row.FullName" />
+            </div>
+            <div class="grid-cell">
+                <input class="grid-input" @bind="row.Username" />
+            </div>
+            <div class="grid-cell">
+                <input class="grid-input" @bind="row.Email" />
+            </div>
+            <div class="grid-cell">
+                <input class="grid-input" type="password" placeholder="••••••••" @bind="row.Password" />
+            </div>
+            <div class="grid-cell">
+                <select class="grid-input" @bind="row.Role">
+                    @foreach (var role in Enum.GetValues<RoleEnum>())
+                    {
+                        <option value="@role">@role</option>
+                    }
+                </select>
+            </div>
+            <div class="grid-cell grid-cell--center">
+                <input type="checkbox" @bind="row.IsActive" />
+            </div>
+            <div class="grid-cell grid-cell--actions">
+                <button class="btn btn--primary" @onclick="() => SaveUser(row)" disabled="@row.IsSaving">
+                    @(row.IsSaving ? "Salvando..." : "Salvar")
+                </button>
+            </div>
+        }
+
+        <!-- Linha de criação -->
+        <div class="grid-cell grid-cell--new">
+            <input class="grid-input" placeholder="Nome" @bind="newUser.FirstLastName" />
+        </div>
+        <div class="grid-cell grid-cell--new">
+            <input class="grid-input" placeholder="Sobrenome" @bind="newUser.FullName" />
+        </div>
+        <div class="grid-cell grid-cell--new">
+            <input class="grid-input" placeholder="Usuário" @bind="newUser.Username" />
+        </div>
+        <div class="grid-cell grid-cell--new">
+            <input class="grid-input" placeholder="Email" @bind="newUser.Email" />
+        </div>
+        <div class="grid-cell grid-cell--new">
+            <input class="grid-input" type="password" placeholder="Senha" @bind="newUser.Password" />
+        </div>
+        <div class="grid-cell grid-cell--new">
+            <select class="grid-input" @bind="newUser.Role">
+                @foreach (var role in Enum.GetValues<RoleEnum>())
+                {
+                    <option value="@role">@role</option>
+                }
+            </select>
+        </div>
+        <div class="grid-cell grid-cell--new grid-cell--center">
+            <input type="checkbox" @bind="newUser.IsActive" />
+        </div>
+        <div class="grid-cell grid-cell--new grid-cell--actions">
+            <button class="btn btn--success" @onclick="CreateUser" disabled="@isCreating">
+                @(isCreating ? "Adicionando..." : "Adicionar usuário")
+            </button>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrEmpty(errorMessage))
+    {
+        <p class="error-message">@errorMessage</p>
+    }
 }
 
 @code {
-    private List<UserDto>? users;
-    private bool showCreateForm;
-    private CreateUserFormModel newUser = new();
+    private List<EditableUserRow>? rows;
+    private EditableUserRow newUser = new();
+    private bool isCreating;
+    private string? errorMessage;
 
     protected override async Task OnInitializedAsync()
     {
@@ -113,68 +115,107 @@ else
 
     private async Task LoadUsers()
     {
-        var result = await UserApiClient.GetUsersAsync();
-        users = result.ToList();
+        var users = await UserApiClient.GetUsersAsync();
+
+        rows = users.Select(u => new EditableUserRow
+        {
+            Id = u.Id,
+            FirstLastName = u.FirstLastName,
+            FullName = u.FullName,
+            Username = u.Username,
+            Email = u.Email,
+            Password = string.Empty,
+            Role = u.Role,
+            IsActive = u.IsActive
+        }).ToList();
+
+        newUser = new EditableUserRow { IsActive = true };
     }
 
-    private void ShowCreateForm()
+    private async Task SaveUser(EditableUserRow row)
     {
-        newUser = new CreateUserFormModel();
-        showCreateForm = true;
-    }
+        row.IsSaving = true;
+        errorMessage = null;
 
-    private void CancelCreate()
-    {
-        showCreateForm = false;
+        try
+        {
+            var userDto = new UserDto(
+                row.Id,
+                row.Username,
+                row.Password,
+                row.FullName,
+                row.FirstLastName,
+                row.Email,
+                row.IsActive,
+                row.Role);
+
+            await UserApiClient.UpdateUserAsync(userDto);
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Erro ao salvar usuário: {ex.Message}";
+        }
+        finally
+        {
+            row.IsSaving = false;
+        }
     }
 
     private async Task CreateUser()
     {
-        var userDto = new UserDto()
+        errorMessage = null;
+
+        if (string.IsNullOrWhiteSpace(newUser.FullName) ||
+            string.IsNullOrWhiteSpace(newUser.Username) ||
+            string.IsNullOrWhiteSpace(newUser.Email) ||
+            string.IsNullOrWhiteSpace(newUser.Password))
         {
-            Id = new Guid(),
-            Username = newUser.Username,
-            Email = newUser.Email,
-            Password = newUser.Password,
-            FullName = newUser.FullName,
-            FirstLastName = newUser.FirstLastName,
-            IsActive = true,
-            // Role = Domain.Enums.RoleEnum newUser.Role
-        };
+            errorMessage = "Preencha todos os campos para adicionar um usuário.";
+            return;
+        }
 
-        var request = new CreateUserRequest(userDto);
-        await UserApiClient.CreateUserAsync(request);
+        isCreating = true;
 
-        showCreateForm = false;
-        await LoadUsers();
+        try
+        {
+            var userDto = new UserDto()
+            {
+                Id = Guid.Empty,
+                Username = newUser.Username,
+                Password = newUser.Password,
+                FullName = newUser.FullName,
+                FirstLastName = newUser.FirstLastName,
+                Email = newUser.Email,
+                IsActive = newUser.IsActive,
+                Role = newUser.Role
+            };
+
+            var request = new CreateUserRequest(userDto);
+
+            await UserApiClient.CreateUserAsync(request);
+
+            await LoadUsers();
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Erro ao criar usuário: {ex.Message}";
+        }
+        finally
+        {
+            isCreating = false;
+        }
     }
 
-    private async Task ToggleStatus(UserDto user, bool isActive)
+    private class EditableUserRow
     {
-        await UserApiClient.SetUserStatusAsync(user.Id, isActive);
-        await LoadUsers();
-    }
-
-    private class CreateUserFormModel
-    {
-        [System.ComponentModel.DataAnnotations.Required]
-        public string Username { get; set; } = string.Empty;
-
-        [System.ComponentModel.DataAnnotations.Required]
-        [System.ComponentModel.DataAnnotations.EmailAddress]
-        public string Email { get; set; } = string.Empty;
-
-        [System.ComponentModel.DataAnnotations.Required]
-        [System.ComponentModel.DataAnnotations.MinLength(6)]
-        public string Password { get; set; } = string.Empty;
-
-        [System.ComponentModel.DataAnnotations.Required]
-        public string FullName { get; set; } = string.Empty;
-
-        [System.ComponentModel.DataAnnotations.Required]
+        public Guid Id { get; set; }
         public string FirstLastName { get; set; } = string.Empty;
-
-        // [System.ComponentModel.DataAnnotations.Required]
-        // public string Role { get; set; } = string.Empty;
+        public string FullName { get; set; } = string.Empty;
+        public string Username { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
+        public string Password { get; set; } = string.Empty;
+        public RoleEnum Role { get; set; }
+        public bool IsActive { get; set; }
+        public bool IsSaving { get; set; }
     }
 }

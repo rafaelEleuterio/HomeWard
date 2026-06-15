@@ -32,6 +32,7 @@ public class AuthController : ControllerBase
             new(ClaimTypes.NameIdentifier, result.User!.Id.ToString()),
             new(ClaimTypes.Role, result.User.Role.ToString()),
             new(ClaimTypes.Email, result.User.Email),
+            new(ClaimTypes.Name, result.User.FirstLastName),
             new("jwt_token", result.Token!)
         };
 
@@ -51,6 +52,6 @@ public class AuthController : ControllerBase
     public async Task<IActionResult> Logout()
     {
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-        return Redirect("/login");
+        return Redirect("/");
     }
 }

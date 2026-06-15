@@ -13,6 +13,19 @@ public class UserDto
     public string FullName { get; set; }
     public string FirstLastName { get; set; }
     public string Email { get; set; }
-    public bool IsActive { get; set; } 
+    public bool IsActive { get; set; }
     public RoleEnum Role { get; set; }
+
+    public UserDto() { }
+    public UserDto(Guid id, string username, string password, string fullName, string firstLastName, string email, bool isActive, RoleEnum role)
+    {
+        Id = id;
+        Username = username;
+        Password = password;
+        FullName = fullName;
+        FirstLastName = firstLastName;
+        Email = email;
+        IsActive = isActive;
+        Role = role;
+    }
 }

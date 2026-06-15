@@ -1,0 +1,103 @@
+.users-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1.2fr 1.2fr 1.6fr 1.2fr 1fr 0.6fr 1fr;
+    gap: 1px;
+    background-color: #e2e2e2;
+    border: 1px solid #e2e2e2;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    font-size: 0.9rem;
+}
+
+.grid-header {
+    background-color: #f7f7f7;
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: #555;
+    padding: 0.6rem 0.75rem;
+}
+
+.grid-header--actions,
+.grid-cell--actions {
+    text-align: right;
+}
+
+.grid-cell {
+    background-color: #fff;
+    padding: 0.4rem 0.5rem;
+    display: flex;
+    align-items: center;
+}
+
+.grid-cell--center {
+    justify-content: center;
+}
+
+.grid-cell--new {
+    background-color: #fafafa;
+}
+
+.grid-input {
+    width: 100%;
+    padding: 0.35rem 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 0.375rem;
+    font-size: 0.85rem;
+}
+
+    .grid-input:focus {
+        outline: none;
+        border-color: #6f42c1;
+        box-shadow: 0 0 0 2px rgba(111, 66, 193, 0.15);
+    }
+
+.btn {
+    padding: 0.4rem 1rem;
+    border: none;
+    border-radius: 0.375rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.btn--primary {
+    background-color: #6f42c1;
+    color: #fff;
+}
+
+    .btn--primary:hover {
+        background-color: #5a35a0;
+    }
+
+    .btn--primary:disabled {
+        background-color: #b8a4dd;
+        cursor: not-allowed;
+    }
+
+.btn--success {
+    background-color: #1e7e34;
+    color: #fff;
+}
+
+    .btn--success:hover {
+        background-color: #166428;
+    }
+
+    .btn--success:disabled {
+        background-color: #8fc29c;
+        cursor: not-allowed;
+    }
+
+.error-message {
+    color: #c0392b;
+    margin-top: 0.75rem;
+    font-size: 0.9rem;
+}
+
+.loading {
+    color: #777;
+    font-style: italic;
+}

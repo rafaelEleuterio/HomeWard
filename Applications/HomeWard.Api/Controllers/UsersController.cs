@@ -32,6 +32,13 @@ public class UsersController : ControllerBase
         return Ok(user);
     }
 
+    [HttpPut]
+    public async Task<ActionResult<UserDto>> UpdateUser(UserDto userDto, CancellationToken cancellationToken)
+    {
+        var user = await _userRepository.UpdateAsync(userDto, cancellationToken);
+        return Ok(user);
+    }
+
     [HttpPatch("{id}/status")]
     public async Task<IActionResult> SetStatus(Guid id, UpdateUserStatusRequest request, CancellationToken cancellationToken)
     {

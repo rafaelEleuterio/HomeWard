@@ -1,4 +1,5 @@
-﻿using HomeWard.Application.Auth;
+﻿using HomeWard.Application;
+using HomeWard.Application.Auth;
 using HomeWard.Application.Repositories;
 using HomeWard.Domain.Dtos;
 using HomeWard.Domain.Entities;
@@ -42,6 +43,8 @@ public sealed class AuthService : IAuthService
         return new LoginResult(true, userDto, null);
     }
 
+    
+
     public async Task<RegisterUserResponse> RegisterAsync(RegisterUserRequest request, CancellationToken cancellationToken)
     {
         var existingUsername = await _users.GetByUsernameAsync(request.User.Username, cancellationToken);
@@ -70,7 +73,7 @@ public sealed class AuthService : IAuthService
         };
 
         await _users.AddAsync(user, cancellationToken);
-        
+
         var userDto = new UserDto()
         {
             Id = user.Id,

@@ -12,6 +12,7 @@
             <AuthorizeView Context="authContext">
                 <Authorized>
                     <span>Olá, @authContext.User.Identity?.Name</span>
+
                     <form method="post" action="/Account/logout">
                         <button type="submit" class="btn-link">Sair</button>
                     </form>
