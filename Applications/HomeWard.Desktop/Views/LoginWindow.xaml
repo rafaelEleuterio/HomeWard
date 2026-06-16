@@ -1,0 +1,87 @@
+﻿<Window
+    x:Class="HomeWard.Desktop.Views.LoginWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:HomeWard.Desktop.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:HomeWard.Desktop.Views"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodels="clr-namespace:HomeWard.Desktop.ViewModels"
+    Title="Login"
+    Width="300"
+    d:DataContext="{d:DesignInstance Type=viewmodels:LoginWindowViewModel,
+                                     IsDesignTimeCreatable=True}"
+    ResizeMode="NoResize"
+    WindowStartupLocation="CenterScreen"
+    SizeToContent="Height"
+    WindowStyle="None"
+    mc:Ignorable="d">
+    <Border Background="LightGray">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <controls:TitleBarControl Grid.Row="0" DataContext="{Binding TitleBar}" />
+
+            <Grid Grid.Row="1" Margin="5,15,5,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <materialDesign:PackIcon
+                    Grid.Column="0"
+                    VerticalAlignment="Center"
+                    Kind="User" />
+                <TextBox
+                    Grid.Column="1"
+                    Margin="10,0,10,0"
+                    materialDesign:HintAssist.HelperText="Usuário ou email"
+                    materialDesign:HintAssist.Hint="Usuário">
+                    <TextBox.Text>
+                        <Binding Path="Username" UpdateSourceTrigger="PropertyChanged">
+                            <!--  Um dia colocar a validação aqui  -->
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+            </Grid>
+
+            <Grid Grid.Row="2" Margin="5,25,5,25">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <materialDesign:PackIcon
+                    Grid.Column="0"
+                    VerticalAlignment="Center"
+                    Kind="Key" />
+
+                <PasswordBox
+                    x:Name="UserPasswordBox"
+                    Grid.Column="1"
+                    Margin="10,0,10,0"
+                    materialDesign:HintAssist.HelperText="Ao menos 8 caracteres"
+                    materialDesign:HintAssist.Hint="Senha"
+                    materialDesign:PasswordBoxAssist.Password="{Binding Password2, Mode=TwoWay}"
+                    materialDesign:TextFieldAssist.HasClearButton="True"
+                    Style="{StaticResource MaterialDesignFloatingHintRevealPasswordBox}" />
+
+            </Grid>
+
+            <Button
+                Grid.Row="3"
+                Width="100"
+                Margin="10"
+                Command="{Binding LoginCommand}"
+                CommandParameter="{Binding ElementName=UserPasswordBox}"
+                Content="Login"
+                Style="{StaticResource MaterialDesignRaisedDarkButton}"
+                ToolTip="MaterialDesignFlatDarkButton" />
+        </Grid>
+
+    </Border>
+</Window>

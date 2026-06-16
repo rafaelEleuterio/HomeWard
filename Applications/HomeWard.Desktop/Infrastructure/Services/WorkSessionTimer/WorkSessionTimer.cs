@@ -16,6 +16,7 @@ public sealed class WorkSessionTimer : IWorkSessionTimer
 
     public event Action? Updated;
     public event Action<SessionTransition>? TransitionAdded;
+    public event Action? StateChanged;
 
     public WorkSessionTimer()
     {
@@ -74,6 +75,7 @@ public sealed class WorkSessionTimer : IWorkSessionTimer
         _stateStartedAt = now;
 
         Updated?.Invoke();
+        StateChanged?.Invoke();
     }
 
     private void OnTick(object? sender, EventArgs e)
