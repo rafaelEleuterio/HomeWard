@@ -55,20 +55,20 @@ public sealed class WorkSessionTimer : IWorkSessionTimer
             _timer.Start();
         }
 
-        if (_stateStartedAt != null)
+        if (_stateStartedAt == null)
+            _stateStartedAt = now;
+
+        var transition = new SessionTransition
         {
-            var transition = new SessionTransition
-            {
-                FromState = _session.State,
-                ToState = state,
-                Timestamp = now,
-                TimeElapsed = now - _stateStartedAt.Value
-            };
+            FromState = _session.State,
+            ToState = state,
+            Timestamp = now,
+            TimeElapsed = now - _stateStartedAt.Value
+        };
 
-            _session.History.Add(transition);
+        _session.History.Add(transition);
 
-            TransitionAdded?.Invoke(transition);
-        }
+        TransitionAdded?.Invoke(transition);
 
         _session.State = state;
         _stateStartedAt = now;
