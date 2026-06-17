@@ -68,4 +68,49 @@ public class WorkSessionRepository : IWorkSessionRepository
         await _context.SessionTransitions.AddAsync(transition, cancellationToken);
         await _context.SaveChangesAsync(cancellationToken);
     }
+
+    public async Task<IReadOnlyList<SessionTransition>> GetTransitionsByWorkSessionIdAsync(Guid workSessionId, CancellationToken cancellationToken = default)
+    {
+        var transitions = await _context.SessionTransitions
+            .Where(t => t.WorkSessionId == workSessionId)
+            .ToListAsync(cancellationToken);
+
+        return transitions;
+    }
+
+    public async Task<SessionTransition?> GetTransitionByIdAsync(Guid transitionId, CancellationToken cancellationToken = default)
+    {
+        var transition = await _context.SessionTransitions
+            .SingleOrDefaultAsync(t => t.Id == transitionId, cancellationToken);
+
+        return transition;
+    }
+
+    public async Task SaveDocumentAsync(Guid transitionId, SessionTransitionDocument document, CancellationToken cancellationToken = default)
+    {
+        var transition = await _context.SessionTransitions
+            .Include(t => t.Documents)
+            .SingleOrDefaultAsync(t => t.Id == transitionId, cancellationToken);
+
+        if(transition == null)
+            throw new ArgumentNullException("SessionTransition not found!");
+
+        transition.Documents.Add(document);
+        
+        await _context.SaveChangesAsync();
+
+        //Poderia simplificar para isso
+        //document.SessionTransitionId = transitionId;
+        //_context.SessionTransitionDocuments.Add(document);
+        //await _context.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task<SessionTransitionDocument?> GetDocumentByIdAsync(Guid documentId, CancellationToken cancellationToken = default)
+    {
+        var transition = await _context.SessionTransitions
+            .SelectMany(t => t.Documents)
+            .SingleOrDefaultAsync(d => d.Id == documentId, cancellationToken);
+
+        return transition;
+    }
 }

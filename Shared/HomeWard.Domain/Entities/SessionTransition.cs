@@ -17,6 +17,8 @@ public class SessionTransition
     public SessionState ToState { get; set; }
     public DateTime CreatedAt { get; set; }
 
+    public List<SessionTransitionDocument> Documents { get; } = [];
+
     [NotMapped]
     public string Title => $"{Timestamp:yyyy/MM/dd HH:mm:ss} - {ToState.GetDescription()}!";
     [NotMapped]

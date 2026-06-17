@@ -35,13 +35,13 @@ public sealed class HomeWardDbContext : DbContext
 
             entity.Property(e => e.Role)
                   .HasConversion<int>()
-                  .HasColumnName("RoleId"); 
+                  .HasColumnName("RoleId");
 
             entity.HasOne<RoleLookup>()
                   .WithMany()
                   .HasForeignKey("RoleId")
                   .OnDelete(DeleteBehavior.Restrict);
-            
+
             // Seed: usuário admin criado junto com o banco
             entity.HasData(new User
             {
@@ -113,11 +113,17 @@ public sealed class HomeWardDbContext : DbContext
                   .HasForeignKey("ToStateId")
                   .OnDelete(DeleteBehavior.Restrict);
         });
+
+        modelBuilder.Entity<SessionTransitionDocument>()
+            .HasOne(x => x.SessionTransition)
+            .WithMany(x => x.Documents)
+            .HasForeignKey(x => x.SessionTransitionId);
     }
 
     public DbSet<User> Users => Set<User>();
     public DbSet<WorkSession> WorkSessions => Set<WorkSession>();
     public DbSet<SessionTransition> SessionTransitions => Set<SessionTransition>();
     public DbSet<SessionStateLookup> SessionStates => Set<SessionStateLookup>();
+    public DbSet<SessionTransitionDocument> SessionTransitionDocuments => Set<SessionTransitionDocument>();
 
 }
