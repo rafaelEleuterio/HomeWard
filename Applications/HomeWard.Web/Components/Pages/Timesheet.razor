@@ -1,0 +1,190 @@
+﻿@page "/timesheet"
+@attribute [Authorize(Roles = "Director,Manager,User")]
+@using HomeWard.Application.Dtos
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.Authorization
+@using HomeWard.Domain.Enums
+@using System.Security.Claims
+@using HomeWard.Web.Infrastructure.Client.WorkSession
+@inject HttpClient Http
+@inject AuthenticationStateProvider AuthStateProvider
+@inject IWorkSessionApiClient WorkSessionApiClient
+
+<PageTitle>
+    Work Sessions
+</PageTitle>
+
+@if (sessions is null)
+{
+    <p class="loading">Loading work sessions...</p>
+}
+else
+{
+    @foreach (var session in sessions)
+    {
+        <details class="work-session-expander">
+
+            <summary class="work-session-summary">
+                <strong>@session.CreatedAt</strong>
+                |
+                State: @session.State
+                |
+                Billable: @session.BillableTime.ToString(@"hh\:mm\:ss")
+                |
+                Worked: @session.WorkedTime.ToString(@"hh\:mm\:ss")
+                |
+                Rested: @session.RestedTime.ToString(@"hh\:mm\:ss")
+            </summary>
+
+            <div class="work-session-grid">
+
+                <div class="grid-header">Timestamp</div>
+                <div class="grid-header">From State</div>
+                <div class="grid-header">To State</div>
+                <div class="grid-header">Elapsed</div>
+                <div class="grid-header">Justification</div>
+                <div class="grid-header">Actions</div>
+
+                @foreach (var transition in session.History)
+                {
+                    <div class="grid-cell">
+                        @transition.Timestamp
+                    </div>
+
+                    <div class="grid-cell">
+                        @transition.FromState
+                    </div>
+
+                    <div class="grid-cell">
+                        @transition.ToState
+                    </div>
+
+                    <div class="grid-cell">
+                        @transition.TimeElapsed
+                    </div>
+
+                    <div class="grid-cell">
+                        <input class="grid-input"
+                               placeholder="Enter justification..."
+                               @bind="transition.Justification" />
+                    </div>
+
+                    <div class="grid-cell">
+
+                        <label class="btn btn--primary"
+                               for="@($"upload-{transition.SessionTransitionId}")">
+
+                            @(transition.IsUploading
+                                ? "Uploading..."
+                                : "Upload")
+                        </label>
+
+                        <InputFile id="@($"upload-{transition.SessionTransitionId}")"
+                                   style="display:none"
+                                   OnChange="e => UploadFile(transition.SessionTransitionId, e)" />
+
+                    </div>
+                }
+
+            </div>
+
+        </details>
+    }
+}
+
+@if (!string.IsNullOrWhiteSpace(errorMessage))
+{
+    <p class="error-message">
+        @errorMessage
+    </p>
+}
+
+
+@code
+{
+    private IReadOnlyList<WorkSessionDto>? _sessions;
+    private List<WorkSessionRow>? sessions;
+
+    private string? UserId { get; set; }
+
+    private string? errorMessage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // 1. Get the current authentication state
+        var authState = await AuthStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        // 2. Find the NameIdentifier claim
+        UserId = user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+        _sessions = await WorkSessionApiClient.GetWorkSessionsByUserIdAsync(Guid.Parse(UserId));
+
+        sessions = _sessions
+        .Select(session => new WorkSessionRow
+        {
+            CreatedAt = session.CreatedAt,
+            State = session.State,
+            BillableTime = session.BillableTime,
+            WorkedTime = session.WorkedTime,
+            RestedTime = session.RestedTime,
+            History = session.History
+                .Select(transition => new SessionTransitionRow
+                {
+                    SessionTransitionId = transition.SessionTransitionId,
+                    Timestamp = transition.Timestamp,
+                    FromState =transition.FromState,
+                    ToState =transition.ToState,
+                    TimeElapsed =transition.TimeElapsed,
+                    Justification = string.Empty
+                })
+                .ToList()
+        })
+        .ToList();
+    }
+
+    private async Task UploadFile(
+        Guid sessionTransitionId,
+        InputFileChangeEventArgs e)
+    {
+        var file = e.File;
+
+        using var content = new MultipartFormDataContent();
+
+        content.Add(new StreamContent(file.OpenReadStream(50_000_000)), "file", file.Name);
+
+        await Http.PostAsync($"api/session-transitions/{sessionTransitionId}/documents", content);
+    }
+
+    private class WorkSessionRow
+    {
+        public DateTime CreatedAt { get; set; }
+
+        public SessionState State { get; set; }
+
+        public TimeSpan BillableTime { get; set; }
+
+        public TimeSpan WorkedTime { get; set; }
+
+        public TimeSpan RestedTime { get; set; }
+
+        public List<SessionTransitionRow> History { get; set; } = [];
+    }
+
+    private class SessionTransitionRow
+    {
+        public Guid SessionTransitionId { get; set; }
+
+        public DateTime Timestamp { get; set; }
+
+        public SessionState FromState { get; set; }
+
+        public SessionState ToState { get; set; }
+
+        public TimeSpan TimeElapsed { get; set; }
+
+        public string Justification { get; set; }
+
+        public bool IsUploading { get; set; }
+    }
+}

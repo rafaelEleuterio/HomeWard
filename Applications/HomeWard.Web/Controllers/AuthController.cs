@@ -1,4 +1,4 @@
-﻿using HomeWard.Web.Infrastructure.Client;
+﻿using HomeWard.Web.Infrastructure.Client.Auth;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;

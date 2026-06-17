@@ -5,25 +5,25 @@
 namespace HomeWard.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class AddUserIsActive : Migration
+    public partial class AddJustification : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<bool>(
-                name: "IsActive",
-                table: "Users",
-                type: "boolean",
+            migrationBuilder.AddColumn<string>(
+                name: "Justification",
+                table: "SessionTransitionDocuments",
+                type: "text",
                 nullable: false,
-                defaultValue: false);
+                defaultValue: "");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "IsActive",
-                table: "Users");
+                name: "Justification",
+                table: "SessionTransitionDocuments");
         }
     }
 }

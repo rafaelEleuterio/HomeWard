@@ -1,6 +1,5 @@
-﻿using HomeWard.Desktop.Domain.Enums;
-using HomeWard.Desktop.Domain.Models;
-using HomeWard.Desktop.Infrastructure.Handlers;
+﻿using HomeWard.Domain.Entities;
+using HomeWard.Domain.Enums;
 using System.Windows.Threading;
 
 namespace HomeWard.Desktop.Infrastructure.Services.WorkSessionTimer;
@@ -44,7 +43,7 @@ public sealed class WorkSessionTimer : IWorkSessionTimer
         if (_session.State == state)
             return;
 
-        var now = DateTime.Now;
+        var now = DateTime.UtcNow;
 
         if (state == SessionState.Finished)
         {
@@ -56,20 +55,20 @@ public sealed class WorkSessionTimer : IWorkSessionTimer
             _timer.Start();
         }
 
-        if (_stateStartedAt != null)
+        if (_stateStartedAt == null)
+            _stateStartedAt = now;
+
+        var transition = new SessionTransition
         {
-            var transition = new SessionTransition
-            {
-                FromState = _session.State,
-                ToState = state,
-                Timestamp = now,
-                TimeElapsed = now - _stateStartedAt.Value
-            };
+            FromState = _session.State,
+            ToState = state,
+            Timestamp = now,
+            TimeElapsed = now - _stateStartedAt.Value
+        };
 
-            _session.History.Add(transition);
+        _session.History.Add(transition);
 
-            TransitionAdded?.Invoke(transition);
-        }
+        TransitionAdded?.Invoke(transition);
 
         _session.State = state;
         _stateStartedAt = now;
@@ -80,7 +79,7 @@ public sealed class WorkSessionTimer : IWorkSessionTimer
 
     private void OnTick(object? sender, EventArgs e)
     {
-        var now = DateTime.Now;
+        var now = DateTime.UtcNow;
 
         var elapsed = now - _lastTick;
 

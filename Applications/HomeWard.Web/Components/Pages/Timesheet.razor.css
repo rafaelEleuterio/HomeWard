@@ -1,11 +1,25 @@
-.users-grid {
+.work-session-expander {
+    margin-bottom: 1rem;
+}
+
+.work-session-summary {
+    padding: 0.75rem;
+    cursor: pointer;
+    background-color: #f7f7f7;
+    border: 1px solid #ddd;
+    border-radius: 0.5rem;
+    font-weight: 600;
+}
+
+.work-session-grid {
     display: grid;
-    grid-template-columns: 1.2fr 1.2fr 1.2fr 1.6fr 1.2fr 1fr 0.6fr 1fr;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr 2fr 1fr;
     gap: 1px;
     background-color: #e2e2e2;
     border: 1px solid #e2e2e2;
     border-radius: 0.5rem;
     overflow: hidden;
+    margin-top: 0.75rem;
     font-size: 0.9rem;
 }
 
@@ -19,24 +33,11 @@
     padding: 0.6rem 0.75rem;
 }
 
-.grid-header--actions,
-.grid-cell--actions {
-    text-align: right;
-}
-
 .grid-cell {
     background-color: #fff;
     padding: 0.4rem 0.5rem;
     display: flex;
     align-items: center;
-}
-
-.grid-cell--center {
-    justify-content: center;
-}
-
-.grid-cell--new {
-    background-color: #fafafa;
 }
 
 .grid-input {
@@ -61,14 +62,13 @@
     font-weight: 500;
     cursor: pointer;
     white-space: nowrap;
+    text-align: center;
 }
-
-
 
 .btn--primary {
     background-color: #6f42c1;
     color: #fff;
-    width:stretch;
+    width: 100%;
 }
 
     .btn--primary:hover {
@@ -77,21 +77,6 @@
 
     .btn--primary:disabled {
         background-color: #b8a4dd;
-        cursor: not-allowed;
-    }
-
-.btn--success {
-    background-color: #1e7e34;
-    color: #fff;
-    width: stretch;
-}
-
-    .btn--success:hover {
-        background-color: #166428;
-    }
-
-    .btn--success:disabled {
-        background-color: #8fc29c;
         cursor: not-allowed;
     }
 

@@ -1,6 +1,6 @@
 ﻿using HomeWard.Application.Auth;
 
-namespace HomeWard.Web.Infrastructure.Client;
+namespace HomeWard.Web.Infrastructure.Client.Auth;
 
 public interface IAuthApiClient
 {

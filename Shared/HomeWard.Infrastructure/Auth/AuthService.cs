@@ -38,7 +38,8 @@ public sealed class AuthService : IAuthService
             FullName = user.FullName,
             FirstLastName = user.FirstLastName,
             Email = user.Email,
-            Username = request.Username
+            Username = request.Username,
+            Role = user.Role
         };
         return new LoginResult(true, userDto, null);
     }

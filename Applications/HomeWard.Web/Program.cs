@@ -1,6 +1,8 @@
 using HomeWard.Web.Components;
 using HomeWard.Web.Infrastructure.Authentication;
-using HomeWard.Web.Infrastructure.Client;
+using HomeWard.Web.Infrastructure.Client.Auth;
+using HomeWard.Web.Infrastructure.Client.User;
+using HomeWard.Web.Infrastructure.Client.WorkSession;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Components.Authorization;
 
@@ -39,6 +41,12 @@ builder.Services.AddHttpClient<IAuthApiClient, AuthApiClient>(client =>
 });
 
 builder.Services.AddHttpClient<IUserApiClient, UserApiClient>(client =>
+{
+    client.BaseAddress = new Uri("http://localhost:8080/");
+})
+.AddHttpMessageHandler<AuthHeaderHandler>();
+
+builder.Services.AddHttpClient<IWorkSessionApiClient, WorkSessionApiClient>(client =>
 {
     client.BaseAddress = new Uri("http://localhost:8080/");
 })

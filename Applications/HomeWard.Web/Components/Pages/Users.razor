@@ -4,8 +4,9 @@
 @using HomeWard.Application.Users
 @using HomeWard.Domain.Dtos
 @using HomeWard.Domain.Enums
-@using HomeWard.Web.Infrastructure.Client
+@using HomeWard.Web.Infrastructure.Client.User
 @inject IUserApiClient UserApiClient
+@rendermode InteractiveServer
 
 <PageTitle>Usuários - HomeWard</PageTitle>
 
@@ -25,7 +26,7 @@ else
         <div class="grid-header">Senha</div>
         <div class="grid-header">Cargo</div>
         <div class="grid-header">Ativo</div>
-        <div class="grid-header grid-header--actions">Ações</div>
+        <div class="grid-header">Ações</div>
 
         @foreach (var row in rows)
         {
@@ -42,11 +43,11 @@ else
                 <input class="grid-input" @bind="row.Email" />
             </div>
             <div class="grid-cell">
-                <input class="grid-input" type="password" placeholder="••••••••" @bind="row.Password" />
+                <input class="grid-input" type="password" disabled placeholder="••••••••" @bind="row.Password" />
             </div>
             <div class="grid-cell">
                 <select class="grid-input" @bind="row.Role">
-                    @foreach (var role in Enum.GetValues<RoleEnum>())
+                    @foreach (var role in Enum.GetValues<Role>())
                     {
                         <option value="@role">@role</option>
                     }
@@ -55,7 +56,7 @@ else
             <div class="grid-cell grid-cell--center">
                 <input type="checkbox" @bind="row.IsActive" />
             </div>
-            <div class="grid-cell grid-cell--actions">
+            <div class="grid-cell">
                 <button class="btn btn--primary" @onclick="() => SaveUser(row)" disabled="@row.IsSaving">
                     @(row.IsSaving ? "Salvando..." : "Salvar")
                 </button>
@@ -80,7 +81,7 @@ else
         </div>
         <div class="grid-cell grid-cell--new">
             <select class="grid-input" @bind="newUser.Role">
-                @foreach (var role in Enum.GetValues<RoleEnum>())
+                @foreach (var role in Enum.GetValues<Role>())
                 {
                     <option value="@role">@role</option>
                 }
@@ -214,7 +215,7 @@ else
         public string Username { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
-        public RoleEnum Role { get; set; }
+        public Role Role { get; set; }
         public bool IsActive { get; set; }
         public bool IsSaving { get; set; }
     }

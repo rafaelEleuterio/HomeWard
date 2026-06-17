@@ -3,6 +3,7 @@ using System;
 using HomeWard.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HomeWard.Infrastructure.Migrations
 {
     [DbContext(typeof(HomeWardDbContext))]
-    partial class HomeWardDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260617013838_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -150,44 +153,6 @@ namespace HomeWard.Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("HomeWard.Domain.Entities.SessionTransitionDocument", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<byte[]>("Content")
-                        .IsRequired()
-                        .HasColumnType("bytea");
-
-                    b.Property<string>("ContentType")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("FileName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<long>("FileSize")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Justification")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<Guid>("SessionTransitionId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SessionTransitionId");
-
-                    b.ToTable("SessionTransitionDocuments");
-                });
-
             modelBuilder.Entity("HomeWard.Domain.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -319,17 +284,6 @@ namespace HomeWard.Infrastructure.Migrations
                     b.Navigation("WorkSession");
                 });
 
-            modelBuilder.Entity("HomeWard.Domain.Entities.SessionTransitionDocument", b =>
-                {
-                    b.HasOne("HomeWard.Domain.Entities.SessionTransition", "SessionTransition")
-                        .WithMany("Documents")
-                        .HasForeignKey("SessionTransitionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("SessionTransition");
-                });
-
             modelBuilder.Entity("HomeWard.Domain.Entities.User", b =>
                 {
                     b.HasOne("HomeWard.Domain.Entities.RoleLookup", null)
@@ -344,11 +298,6 @@ namespace HomeWard.Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("StateId")
                         .OnDelete(DeleteBehavior.Restrict);
-                });
-
-            modelBuilder.Entity("HomeWard.Domain.Entities.SessionTransition", b =>
-                {
-                    b.Navigation("Documents");
                 });
 
             modelBuilder.Entity("HomeWard.Domain.Entities.WorkSession", b =>

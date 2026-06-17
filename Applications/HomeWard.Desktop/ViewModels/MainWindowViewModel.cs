@@ -1,16 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using HomeWard.Desktop.Domain.Enums;
 using HomeWard.Desktop.Domain.Models;
-using HomeWard.Desktop.Infrastructure.Handlers;
 using HomeWard.Desktop.Infrastructure.Services.WorkSessionTimer;
-using System;
-using System.Collections.Generic;
+using HomeWard.Domain.Entities;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Drawing.Imaging;
-using System.Text;
-using System.Timers;
 
 namespace HomeWard.Desktop.ViewModels;
 
