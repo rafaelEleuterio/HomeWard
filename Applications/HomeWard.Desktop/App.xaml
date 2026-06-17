@@ -2,6 +2,7 @@
     x:Class="HomeWard.Desktop.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:HomeWard.Desktop.Infrastructure.Converters"
     xmlns:local="clr-namespace:HomeWard.Desktop"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:tb="clr-namespace:H.NotifyIcon;assembly=H.NotifyIcon.Wpf">
@@ -15,33 +16,170 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesign3.Defaults.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
+            <converters:StringToVisibilityConverter x:Key="StringToVisibilityConverter" />
+
             <tb:TaskbarIcon
                 x:Key="TrayIconResource"
                 x:Shared="False"
-                DoubleClickCommand="{Binding ShowWindowCommand}"
-                IconSource="pack://application:,,,/Images/TrayIcon.ico"
-                MenuActivation="LeftOrRightClick"
+                DoubleClickCommand="{Binding ShowTimerCommand}"
+                IconSource="pack://application:,,,/Images/home-ward.ico"
+                PopupActivation="LeftOrRightClick"
                 ToolTipText="HomeWard">
+                
+                <tb:TaskbarIcon.TrayPopup>
+                    <Border
+                        Width="220"
+                        Background="{DynamicResource MaterialDesign.Brush.Background}"
+                        CornerRadius="8"
+                        Effect="{DynamicResource MaterialDesignShadowDepth4}">
+                        <Border ClipToBounds="True" CornerRadius="8">
+                            <StackPanel>
 
-                <tb:TaskbarIcon.ContextMenu>
-                    <ContextMenu>
-                        <MenuItem Command="{Binding ShowTimerCommand}" Header="Abrir" />
-                        <Separator />
-                        <MenuItem Command="{Binding StartCommand}" Header="Start" />
-                        <MenuItem Command="{Binding StopCommand}" Header="Stop" />
-                        <MenuItem Command="{Binding ResumeCommand}" Header="Resume" />
-                        <MenuItem Command="{Binding RestCommand}" Header="Rest" />
-                        <MenuItem Command="{Binding PauseCommand}" Header="Pause" />
-                        <Separator />
-                        <MenuItem Command="{Binding ExitCommand}" Header="Fechar" />
-                    </ContextMenu>
-                </tb:TaskbarIcon.ContextMenu>
+                                <!--  Header  -->
+                                <Border Padding="16,12" Background="{DynamicResource MaterialDesign.Brush.Primary}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon
+                                            Width="20"
+                                            Height="20"
+                                            Margin="0,0,8,0"
+                                            VerticalAlignment="Center"
+                                            Foreground="White"
+                                            Kind="HomeOutline" />
+                                        <TextBlock
+                                            VerticalAlignment="Center"
+                                            FontWeight="Bold"
+                                            Foreground="White"
+                                            Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
+                                            Text="HomeWard" />
+                                    </StackPanel>
+                                </Border>
+
+                                <!--  Abrir  -->
+                                <Button
+                                    Margin="8,8,8,0"
+                                    HorizontalAlignment="Stretch"
+                                    HorizontalContentAlignment="Left"
+                                    Command="{Binding ShowTimerCommand}"
+                                    Style="{StaticResource MaterialDesignOutlinedButton}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon
+                                            Margin="0,0,8,0"
+                                            VerticalAlignment="Center"
+                                            Kind="OpenInApp" />
+                                        <TextBlock VerticalAlignment="Center" Text="Abrir" />
+                                    </StackPanel>
+                                </Button>
+
+                                <Separator Margin="8,8,8,4" />
+
+                                <!--  Timer controls  -->
+                                <Button
+                                    Margin="8,4,8,0"
+                                    HorizontalAlignment="Stretch"
+                                    HorizontalContentAlignment="Left"
+                                    Command="{Binding StartCommand}"
+                                    Style="{StaticResource MaterialDesignFlatButton}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon
+                                            Margin="0,0,8,0"
+                                            VerticalAlignment="Center"
+                                            Kind="Timer" />
+                                        <TextBlock VerticalAlignment="Center" Text="Iniciar" />
+                                    </StackPanel>
+                                </Button>
+
+                                <Button
+                                    Margin="8,4,8,0"
+                                    HorizontalAlignment="Stretch"
+                                    HorizontalContentAlignment="Left"
+                                    Command="{Binding ResumeCommand}"
+                                    Style="{StaticResource MaterialDesignFlatButton}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon
+                                            Margin="0,0,8,0"
+                                            VerticalAlignment="Center"
+                                            Kind="TimerPlay" />
+                                        <TextBlock VerticalAlignment="Center" Text="Retomar" />
+                                    </StackPanel>
+                                </Button>
+
+                                <Button
+                                    Margin="8,4,8,0"
+                                    HorizontalAlignment="Stretch"
+                                    HorizontalContentAlignment="Left"
+                                    Command="{Binding RestCommand}"
+                                    Style="{StaticResource MaterialDesignFlatButton}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon
+                                            Margin="0,0,8,0"
+                                            VerticalAlignment="Center"
+                                            Kind="Coffee" />
+                                        <TextBlock VerticalAlignment="Center" Text="Descanso" />
+                                    </StackPanel>
+                                </Button>
+
+                                <Button
+                                    Margin="8,4,8,0"
+                                    HorizontalAlignment="Stretch"
+                                    HorizontalContentAlignment="Left"
+                                    Command="{Binding PauseCommand}"
+                                    Style="{StaticResource MaterialDesignFlatButton}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon
+                                            Margin="0,0,8,0"
+                                            VerticalAlignment="Center"
+                                            Kind="CoffeeOff" />
+                                        <TextBlock VerticalAlignment="Center" Text="Pausar" />
+                                    </StackPanel>
+                                </Button>
+
+                                <Button
+                                    Margin="8,4,8,0"
+                                    HorizontalAlignment="Stretch"
+                                    HorizontalContentAlignment="Left"
+                                    Command="{Binding StopCommand}"
+                                    Foreground="{DynamicResource MaterialDesign.Brush.Secondary}"
+                                    Style="{StaticResource MaterialDesignFlatButton}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon
+                                            Margin="0,0,8,0"
+                                            VerticalAlignment="Center"
+                                            Kind="TimerStop" />
+                                        <TextBlock VerticalAlignment="Center" Text="Encerrar" />
+                                    </StackPanel>
+                                </Button>
+
+                                <Separator Margin="8,4,8,4" />
+
+                                <!--  Fechar  -->
+                                <Button
+                                    Margin="8,0,8,8"
+                                    HorizontalAlignment="Stretch"
+                                    HorizontalContentAlignment="Left"
+                                    Command="{Binding ExitCommand}"
+                                    Foreground="{DynamicResource MaterialDesign.Brush.ForegroundLight}"
+                                    Style="{StaticResource MaterialDesignFlatButton}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon
+                                            Margin="0,0,8,0"
+                                            VerticalAlignment="Center"
+                                            Kind="ExitToApp" />
+                                        <TextBlock VerticalAlignment="Center" Text="Fechar" />
+                                    </StackPanel>
+                                </Button>
+
+                            </StackPanel>
+                        </Border>
+                    </Border>
+                </tb:TaskbarIcon.TrayPopup>
             </tb:TaskbarIcon>
 
             <Style
                 x:Key="CloseButton"
                 BasedOn="{StaticResource MaterialDesignFlatDarkBgButton}"
                 TargetType="{x:Type Button}">
+
+                <Setter Property="BorderThickness" Value="0" />
 
                 <Style.Triggers>
                     <Trigger Property="IsMouseOver" Value="True">
@@ -57,6 +195,8 @@
                 x:Key="TitleBarButton"
                 BasedOn="{StaticResource MaterialDesignFlatDarkBgButton}"
                 TargetType="{x:Type Button}">
+
+                <Setter Property="BorderThickness" Value="0" />
 
                 <Style.Triggers>
                     <Trigger Property="IsMouseOver" Value="True">
