@@ -1,10 +1,12 @@
 ﻿using H.NotifyIcon;
 using HomeWard.Application.Auth;
 using HomeWard.Desktop.Infrastructure.Client.AuthApiClient;
+using HomeWard.Desktop.Infrastructure.Client.WorkSessionApiClient;
 using HomeWard.Desktop.Infrastructure.Services.Navigation.ActivatorWindow;
 using HomeWard.Desktop.Infrastructure.Services.Navigation.NavigationService;
 using HomeWard.Desktop.Infrastructure.Services.Navigation.WindowService;
 using HomeWard.Desktop.Infrastructure.Services.UserService;
+using HomeWard.Desktop.Infrastructure.Services.WorkSessionSync;
 using HomeWard.Desktop.Infrastructure.Services.WorkSessionTimer;
 using HomeWard.Desktop.ViewModels;
 using HomeWard.Desktop.Views;
@@ -65,9 +67,15 @@ public partial class App : System.Windows.Application
         services.AddSingleton<IWindowService, WindowService>();
         services.AddSingleton<INavigationService, NavigationService>();
         services.AddSingleton<IUserService, UserService>();
+        services.AddSingleton<IWorkSessionSyncService, WorkSessionSyncService>();
         services.AddTransient<AuthHeaderHandler>();
         services.AddHttpClient<IAuthApiClient, AuthApiClient>(client => { client.BaseAddress = new Uri("http://localhost:8080/"); })
             .AddHttpMessageHandler<AuthHeaderHandler>();
+
+        services.AddHttpClient<IWorkSessionApiClient, WorkSessionApiClient>(client =>
+        {
+            client.BaseAddress = new Uri("http://localhost:8080/");
+        }).AddHttpMessageHandler<AuthHeaderHandler>();
     }
 
     private static void RegisterViewModels(IServiceCollection services)

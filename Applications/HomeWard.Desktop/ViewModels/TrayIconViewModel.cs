@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using HomeWard.Desktop.Infrastructure.Services.Navigation.NavigationService;
 using HomeWard.Desktop.Infrastructure.Services.UserService;
+using HomeWard.Desktop.Infrastructure.Services.WorkSessionSync;
 using HomeWard.Desktop.Infrastructure.Services.WorkSessionTimer;
 using HomeWard.Domain.Enums;
 
@@ -10,12 +11,17 @@ public partial class TrayIconViewModel : TimerControlViewModelBase
 {
     private readonly INavigationService _navigationService;
     private readonly IUserService _userService;
+    private readonly IWorkSessionSyncService _workSessionSyncService;
 
-    public TrayIconViewModel(INavigationService navigationService, IWorkSessionTimer timer, IUserService userService)
+    public TrayIconViewModel(INavigationService navigationService, 
+        IWorkSessionTimer timer, 
+        IUserService userService, 
+        IWorkSessionSyncService workSessionSyncService)
         : base(timer)
     {
         _navigationService = navigationService;
         _userService = userService;
+        _workSessionSyncService = workSessionSyncService;
 
         _userService.UserChanged += UserChanged;
     }
@@ -40,6 +46,7 @@ public partial class TrayIconViewModel : TimerControlViewModelBase
     [RelayCommand]
     public void Exit()
     {
+        _workSessionSyncService.Stop();
         Timer.ChangeState(SessionState.Finished);
         App.Current.Shutdown();
     }

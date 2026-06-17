@@ -5,6 +5,7 @@ using HomeWard.Desktop.Domain.Models;
 using HomeWard.Desktop.Infrastructure.Client.AuthApiClient;
 using HomeWard.Desktop.Infrastructure.Services.Navigation.NavigationService;
 using HomeWard.Desktop.Infrastructure.Services.UserService;
+using HomeWard.Desktop.Infrastructure.Services.WorkSessionSync;
 using System.Security;
 using System.Windows.Controls;
 
@@ -15,6 +16,7 @@ public partial class LoginWindowViewModel : ObservableObject, ITitleBarAware
     private readonly IAuthApiClient _authApiClient;
     private readonly INavigationService _navigationService;
     private readonly IUserService _userService;
+    private readonly IWorkSessionSyncService _workSessionSyncService;
 
     [ObservableProperty]
     private string username = string.Empty;
@@ -32,11 +34,13 @@ public partial class LoginWindowViewModel : ObservableObject, ITitleBarAware
 
     public LoginWindowViewModel(IAuthApiClient authApiClient, 
         INavigationService navigationService, 
-        IUserService userService)
+        IUserService userService,
+        IWorkSessionSyncService workSessionSyncServicec)
     {
         _authApiClient = authApiClient;
         _navigationService = navigationService;
         _userService = userService;
+        _workSessionSyncService = workSessionSyncServicec;
 
         TitleBar = new TitleBarViewModel("Login");
         TitleBar.MaximizeVisible = false;
@@ -63,6 +67,13 @@ public partial class LoginWindowViewModel : ObservableObject, ITitleBarAware
 
                     return;
                 }
+                _userService.SetUser(result.User!, result.Token!);
+
+                // Inicia a sincronização com a API
+                _workSessionSyncService.Start();
+
+                _navigationService.NavigateTo<MainWindowViewModel>();
+                _navigationService.Close<LoginWindowViewModel>();
 
                 _userService.SetUser(result.User, result.Token);
             }
