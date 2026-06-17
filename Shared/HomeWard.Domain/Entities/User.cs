@@ -20,7 +20,7 @@ public sealed class User
     public string FirstLastName { get; set; } = string.Empty;
 
     public string PasswordHash { get; set; } = string.Empty;
-    public RoleEnum Role { get; set; } = RoleEnum.User;
+    public Role Role { get; set; } = Role.User;
     public bool IsActive { get; set; } = true;
 
     public DateTime CreatedAt { get; set; }

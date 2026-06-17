@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using HomeWard.Desktop.Domain.Enums;
 using HomeWard.Desktop.Infrastructure.Services.WorkSessionTimer;
+using HomeWard.Domain.Enums;
 
 namespace HomeWard.Desktop.ViewModels;
 

@@ -65,7 +65,7 @@ public sealed class UserRepository : IUserRepository
             Username = userDto.Username,
             Email = userDto.Email,
             IsActive = true,
-            CreatedAt = DateTime.Now,
+            CreatedAt = DateTime.UtcNow,
         };
 
         await _db.Users.AddAsync(user, cancellationToken);

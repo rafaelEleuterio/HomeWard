@@ -1,5 +1,5 @@
-﻿using HomeWard.Desktop.Domain.Enums;
-using HomeWard.Desktop.Domain.Models;
+﻿using HomeWard.Domain.Entities;
+using HomeWard.Domain.Enums;
 
 namespace HomeWard.Desktop.Infrastructure.Services.WorkSessionTimer;
 

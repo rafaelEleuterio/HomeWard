@@ -14,10 +14,10 @@ public class UserDto
     public string FirstLastName { get; set; }
     public string Email { get; set; }
     public bool IsActive { get; set; }
-    public RoleEnum Role { get; set; }
+    public Role Role { get; set; }
 
     public UserDto() { }
-    public UserDto(Guid id, string username, string password, string fullName, string firstLastName, string email, bool isActive, RoleEnum role)
+    public UserDto(Guid id, string username, string password, string fullName, string firstLastName, string email, bool isActive, Role role)
     {
         Id = id;
         Username = username;

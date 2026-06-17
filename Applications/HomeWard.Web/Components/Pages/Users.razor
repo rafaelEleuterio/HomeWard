@@ -47,7 +47,7 @@ else
             </div>
             <div class="grid-cell">
                 <select class="grid-input" @bind="row.Role">
-                    @foreach (var role in Enum.GetValues<RoleEnum>())
+                    @foreach (var role in Enum.GetValues<Role>())
                     {
                         <option value="@role">@role</option>
                     }
@@ -81,7 +81,7 @@ else
         </div>
         <div class="grid-cell grid-cell--new">
             <select class="grid-input" @bind="newUser.Role">
-                @foreach (var role in Enum.GetValues<RoleEnum>())
+                @foreach (var role in Enum.GetValues<Role>())
                 {
                     <option value="@role">@role</option>
                 }
@@ -215,7 +215,7 @@ else
         public string Username { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
-        public RoleEnum Role { get; set; }
+        public Role Role { get; set; }
         public bool IsActive { get; set; }
         public bool IsSaving { get; set; }
     }

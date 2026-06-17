@@ -1,15 +1,8 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using HomeWard.Desktop.Domain.Enums;
-using HomeWard.Desktop.Infrastructure.Client.AuthApiClient;
+﻿using CommunityToolkit.Mvvm.Input;
 using HomeWard.Desktop.Infrastructure.Services.Navigation.NavigationService;
 using HomeWard.Desktop.Infrastructure.Services.UserService;
 using HomeWard.Desktop.Infrastructure.Services.WorkSessionTimer;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Timers;
-using System.Windows;
+using HomeWard.Domain.Enums;
 
 namespace HomeWard.Desktop.ViewModels;
 

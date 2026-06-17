@@ -19,6 +19,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IWorkSessionRepository, WorkSessionRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddDbContext<HomeWardDbContext>(
     options =>
