@@ -9,81 +9,130 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewmodels="clr-namespace:HomeWard.Desktop.ViewModels"
     Title="Login"
-    Width="300"
+    Width="360"
     d:DataContext="{d:DesignInstance Type=viewmodels:LoginWindowViewModel,
                                      IsDesignTimeCreatable=True}"
+    AllowsTransparency="True"
+    Background="Transparent"
     ResizeMode="NoResize"
     SizeToContent="Height"
     WindowStartupLocation="CenterScreen"
     WindowStyle="None"
     mc:Ignorable="d">
-    <Border Background="LightGray">
+
+    <Border
+        Background="{DynamicResource MaterialDesign.Brush.Background}"
+        CornerRadius="12"
+        Effect="{DynamicResource MaterialDesignShadowDepth4}">
+
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
+            <!--  TitleBar  -->
             <controls:TitleBarControl Grid.Row="0" DataContext="{Binding TitleBar}" />
 
-            <Grid Grid.Row="1" Margin="5,15,5,0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
+            <!--  Logo / App name  -->
+            <StackPanel
+                Grid.Row="1"
+                Margin="32,24,32,8"
+                HorizontalAlignment="Center">
                 <materialDesign:PackIcon
-                    Grid.Column="0"
-                    Margin="10,5,10,0"
-                    VerticalAlignment="Center"
-                    Kind="User" />
-                <TextBox
-                    Grid.Column="1"
-                    Margin="0,0,10,0"
-                    materialDesign:HintAssist.HelperText="Usuário ou email"
-                    materialDesign:HintAssist.Hint="Usuário">
-                    <TextBox.Text>
-                        <Binding Path="Username" UpdateSourceTrigger="PropertyChanged">
-                            <!--  Um dia colocar a validação aqui  -->
-                        </Binding>
-                    </TextBox.Text>
-                </TextBox>
-            </Grid>
+                    Width="48"
+                    Height="48"
+                    HorizontalAlignment="Center"
+                    Foreground="{DynamicResource MaterialDesign.Brush.Primary}"
+                    Kind="HomeOutline" />
+                <TextBlock
+                    Margin="0,8,0,0"
+                    HorizontalAlignment="Center"
+                    FontWeight="Bold"
+                    Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                    Text="HomeWard" />
+                <TextBlock
+                    Margin="0,4,0,0"
+                    HorizontalAlignment="Center"
+                    Foreground="{DynamicResource MaterialDesign.Brush.ForegroundLight}"
+                    Style="{StaticResource MaterialDesignCaptionTextBlock}"
+                    Text="Faça login para continuar" />
+            </StackPanel>
 
-            <Grid Grid.Row="2" Margin="5,25,5,25">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <materialDesign:PackIcon
-                    Grid.Column="0"
-                    Margin="10,5,10,0"
-                    VerticalAlignment="Center"
-                    Kind="Key" />
+            <!--  Erro  -->
+            <Border
+                Grid.Row="2"
+                Margin="32,8,32,0"
+                Padding="12,8"
+                Background="#FFDECE"
+                CornerRadius="6"
+                Visibility="{Binding ErrorMessage, Converter={StaticResource StringToVisibilityConverter}}">
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon
+                        Margin="0,0,8,0"
+                        VerticalAlignment="Center"
+                        Foreground="#C0392B"
+                        Kind="AlertCircleOutline" />
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        Foreground="#C0392B"
+                        Style="{StaticResource MaterialDesignCaptionTextBlock}"
+                        Text="{Binding ErrorMessage}"
+                        TextWrapping="Wrap" />
+                </StackPanel>
+            </Border>
 
-                <PasswordBox
-                    x:Name="UserPasswordBox"
-                    Grid.Column="1"
-                    Margin="0,0,10,0"
-                    materialDesign:HintAssist.HelperText="Ao menos 8 caracteres"
-                    materialDesign:HintAssist.Hint="Senha"
-                    materialDesign:PasswordBoxAssist.Password="{Binding Password2, Mode=TwoWay}"
-                    materialDesign:TextFieldAssist.HasClearButton="True"
-                    Style="{StaticResource MaterialDesignFloatingHintRevealPasswordBox}" />
-
-            </Grid>
-
-            <Button
+            <!--  Username  -->
+            <TextBox
                 Grid.Row="3"
-                Width="100"
-                Margin="10"
+                Margin="32,24,32,0"
+                materialDesign:HintAssist.HelperText="Usuário ou email"
+                materialDesign:HintAssist.Hint="Usuário"
+                materialDesign:TextFieldAssist.LeadingIcon="Account"
+                Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+                <TextBox.Text>
+                    <Binding Path="Username" UpdateSourceTrigger="PropertyChanged" />
+                </TextBox.Text>
+            </TextBox>
+
+            <!--  Senha  -->
+            <PasswordBox
+                x:Name="UserPasswordBox"
+                Grid.Row="4"
+                Margin="32,20,32,0"
+                materialDesign:HintAssist.HelperText="Ao menos 8 caracteres"
+                materialDesign:HintAssist.Hint="Senha"
+                materialDesign:PasswordBoxAssist.Password="{Binding Password2, Mode=TwoWay}"
+                materialDesign:TextFieldAssist.HasClearButton="True"
+                materialDesign:TextFieldAssist.LeadingIcon="Lock"
+                Style="{StaticResource MaterialDesignFloatingHintRevealPasswordBox}" />
+
+            <!--  Botão Login  -->
+            <Button
+                Grid.Row="5"
+                Height="44"
+                Margin="32,24,32,32"
+                materialDesign:ButtonAssist.CornerRadius="8"
                 Command="{Binding LoginCommand}"
                 CommandParameter="{Binding ElementName=UserPasswordBox}"
-                Content="Login"
-                Style="{StaticResource MaterialDesignRaisedDarkButton}"
-                ToolTip="MaterialDesignFlatDarkButton" />
-        </Grid>
+                Style="{StaticResource MaterialDesignRaisedDarkButton}">
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon
+                        Margin="0,0,8,0"
+                        VerticalAlignment="Center"
+                        Kind="Login" />
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        FontSize="14"
+                        FontWeight="Medium"
+                        Text="Entrar" />
+                </StackPanel>
+            </Button>
 
+        </Grid>
     </Border>
 </Window>
