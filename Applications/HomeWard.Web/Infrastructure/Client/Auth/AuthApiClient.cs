@@ -1,6 +1,6 @@
 ﻿using HomeWard.Application.Auth;
 
-namespace HomeWard.Web.Infrastructure.Client;
+namespace HomeWard.Web.Infrastructure.Client.Auth;
 
 public class AuthApiClient : IAuthApiClient
 {
@@ -13,7 +13,7 @@ public class AuthApiClient : IAuthApiClient
 
     public async Task<LoginResult> LoginAsync(string username, string password, CancellationToken cancellationToken = default)
     {
-        var request = new Application.Auth.LoginRequest(username, password);
+        var request = new LoginRequest(username, password);
 
         var response = await _httpClient.PostAsJsonAsync("api/auth/login", request, cancellationToken);
 

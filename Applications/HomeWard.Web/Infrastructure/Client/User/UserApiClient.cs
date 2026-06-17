@@ -1,7 +1,7 @@
 ﻿using HomeWard.Application.Users;
 using HomeWard.Domain.Dtos;
 
-namespace HomeWard.Web.Infrastructure.Client;
+namespace HomeWard.Web.Infrastructure.Client.User;
 
 public class UserApiClient : IUserApiClient
 {

@@ -80,7 +80,7 @@ public class WorkSessionController : ControllerBase
     }
 
     [HttpGet("user/{userId}")]
-    public async Task<ActionResult<IReadOnlyList<WorkSessionResponse>>> GetByUser(Guid userId, CancellationToken cancellationToken)
+    public async Task<ActionResult<IReadOnlyList<WorkSessionResponse>>> GetWorkSessionByUser(Guid userId, CancellationToken cancellationToken)
     {
         var sessions = await _repository.GetByUserAsync(userId, cancellationToken);
 
@@ -88,7 +88,7 @@ public class WorkSessionController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<WorkSessionResponse>> GetById(Guid id, CancellationToken cancellationToken)
+    public async Task<ActionResult<WorkSessionResponse>> GetWorkSessionById(Guid id, CancellationToken cancellationToken)
     {
         var session = await _repository.GetByIdAsync(id, cancellationToken);
 
@@ -96,6 +96,61 @@ public class WorkSessionController : ControllerBase
             return NotFound();
 
         return Ok(MapToResponse(session));
+    }
+
+    [HttpGet("{workSessionId}/transitions")]
+    public async Task<ActionResult<IReadOnlyList<SessionTransition>>> GetTransitionsByWorkSessionId(Guid workSessionId, CancellationToken cancellationToken)
+    {
+        var transitions = await _repository.GetTransitionsByWorkSessionIdAsync(workSessionId, cancellationToken);
+
+        if (transitions is null)
+            return NotFound();
+
+        return Ok();
+    }
+
+    [HttpPost("transitions/{transitionId:guid}/documents")]
+    public async Task<IActionResult> UploadDocument(Guid transitionId, IFormFile file, string justification, CancellationToken cancellationToken)
+    {
+        var transition = await _repository.GetTransitionByIdAsync(transitionId, cancellationToken);
+
+        if (transition is null)
+            return NotFound();
+
+        // Limit of 10MB for uploaded files
+        const long maxFileSize = 10 * 1024 * 1024;
+        if (file.Length > maxFileSize)
+            return BadRequest("Maximum file size is 10 MB.");
+
+        using var memoryStream = new MemoryStream();
+
+        await file.CopyToAsync(memoryStream, cancellationToken);
+
+        var transitionDocument = new SessionTransitionDocument()
+        {
+            Id = Guid.NewGuid(),
+            FileName = file.FileName,
+            ContentType = file.ContentType,
+            FileSize = file.Length,
+            Content = memoryStream.ToArray(),
+            Justification = justification,
+            CreatedAt = DateTime.UtcNow
+        };
+
+        await _repository.SaveDocumentAsync(transitionId, transitionDocument, cancellationToken);
+
+        return Ok();
+    }
+
+    [HttpGet("documents/{documentId:guid}")]
+    public async Task<IActionResult> DownloadDocument(Guid documentId, CancellationToken cancellationToken)
+    {
+        var document = await _repository.GetDocumentByIdAsync(documentId, cancellationToken);
+
+        if (document is null)
+            return NotFound();
+
+        return File(document.Content, document.ContentType, document.FileName);
     }
 
     private static WorkSessionResponse MapToResponse(WorkSession session) =>
