@@ -1,7 +1,25 @@
 ﻿@page "/"
 
-<PageTitle>Home</PageTitle>
+<PageTitle>HomeWard</PageTitle>
 
-<h1>Hello, </h1>
-<h3>&emsp;&emsp; wellcome to Home Ward management!</h3>
-         
+<div class="home-container">
+    <div class="home-hero">
+        <svg class="home-logo" viewBox="0 0 24 24">
+            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+        </svg>
+        <h1 class="home-title">HomeWard</h1>
+        <p class="home-subtitle">Gestão de tempo e equipes, simplificada.</p>
+
+        <AuthorizeView>
+            <Authorized Context="authCtx">
+                <p class="home-welcome">Bem-vindo, <strong>@authCtx.User.Identity?.Name</strong>!</p>
+                <a href="timesheet" class="home-btn">Ver Timesheet</a>
+            </Authorized>
+            <NotAuthorized>
+                <a href="login" class="home-btn">Entrar</a>
+            </NotAuthorized>
+        </AuthorizeView>
+    </div>
+</div>
+
+@using Microsoft.AspNetCore.Components.Authorization

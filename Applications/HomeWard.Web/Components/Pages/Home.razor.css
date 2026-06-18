@@ -1,0 +1,53 @@
+.home-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 3.5rem);
+}
+
+.home-hero {
+    text-align: center;
+    padding: 2rem;
+}
+
+.home-logo {
+    width: 72px;
+    height: 72px;
+    fill: #6f42c1;
+    margin-bottom: 1rem;
+}
+
+.home-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #2c2c2c;
+    margin: 0 0 0.5rem;
+}
+
+.home-subtitle {
+    font-size: 1.1rem;
+    color: #666;
+    margin: 0 0 1.5rem;
+}
+
+.home-welcome {
+    font-size: 1rem;
+    color: #444;
+    margin-bottom: 1.5rem;
+}
+
+.home-btn {
+    display: inline-block;
+    padding: 0.75rem 2rem;
+    background-color: #6f42c1;
+    color: white;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.15s;
+}
+
+    .home-btn:hover {
+        background-color: #5a35a0;
+    }
