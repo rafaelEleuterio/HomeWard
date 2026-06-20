@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using HomeWard.Domain.Enums;
 
 namespace HomeWard.Application.SessionTransitions;
 
-internal class SessionTransitionsRequests
-{
-}
+public sealed record AddTransitionRequest(SessionState FromState, SessionState ToState, DateTime Timestamp, TimeSpan TimeElapsed);

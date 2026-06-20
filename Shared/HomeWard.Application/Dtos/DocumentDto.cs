@@ -17,14 +17,19 @@ public class DocumentDto
 
     public DocumentDto() { }
 
-    public DocumentDto(Guid id, Guid transitionid, string fileName, string contentType, long fileSize, byte[] content, string justification)
+    public DocumentDto(string fileName, string contentType, long fileSize, byte[] content)
     {
-        Id = id;
-        Transitionid = transitionid;
         FileName = fileName;
         ContentType = contentType;
         FileSize = fileSize;
         Content = content;
+    }
+
+    public DocumentDto(Guid id, Guid transitionid, string fileName, string contentType, long fileSize, byte[] content, string justification)
+        :this(fileName, contentType, fileSize, content)
+    {
+        Id = id;
+        Transitionid = transitionid;
         Justification = justification;
     }
 }

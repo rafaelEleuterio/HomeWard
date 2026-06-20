@@ -2,4 +2,4 @@
 
 namespace HomeWard.Application.Users;
 
-public sealed record GetUser(Guid userid, string username, string fullName, string firstLastName, string email, bool isActive, Role role);
+public sealed record GetUserResposnse(Guid userid, string username, string fullName, string firstLastName, string email, bool isActive, Role role);
