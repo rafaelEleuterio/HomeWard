@@ -1,4 +1,5 @@
-﻿using HomeWard.Application.WorkSessions;
+﻿using HomeWard.Application.SessionTransitions;
+using HomeWard.Application.WorkSessions;
 using HomeWard.Desktop.Infrastructure.Client.WorkSessionApiClient;
 using HomeWard.Desktop.Infrastructure.Services.UserService;
 using HomeWard.Desktop.Infrastructure.Services.WorkSessionTimer;

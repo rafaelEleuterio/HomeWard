@@ -6,4 +6,4 @@ public sealed record StartWorkSessionRequest(Guid UserId);
 
 public sealed record GetWorkSessionRequest(Guid UserId);
 
-public sealed record FinishWorkSessionRequest(TimeSpan BillableTime, TimeSpan WorkedTime, TimeSpan RestedTime, TimeSpan PausedTime);
+public sealed record FinishWorkSessionRequest(Guid WorkSessionId, TimeSpan BillableTime, TimeSpan WorkedTime, TimeSpan RestedTime, TimeSpan PausedTime);
