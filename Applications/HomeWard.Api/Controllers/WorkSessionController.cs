@@ -1,4 +1,5 @@
 ﻿using HomeWard.Application.Repositories;
+using HomeWard.Application.SessionTransitions;
 using HomeWard.Application.WorkSessions;
 using HomeWard.Domain.Entities;
 using HomeWard.Domain.Enums;
@@ -149,7 +150,7 @@ public class WorkSessionController : ControllerBase
 
         if (document is null)
             return NotFound();
-
+            
         return File(document.Content, document.ContentType, document.FileName);
     }
 
@@ -157,6 +158,7 @@ public class WorkSessionController : ControllerBase
         new(session.Id, session.UserId, session.State, session.BillableTime, session.WorkedTime, session.RestedTime, session.PausedTime, session.CreatedAt,
             session.History.Select(t => new SessionTransitionResponse(
                 t.Id,
+                session.Id, // SessionTransition vale a pena ver se é possível propagar
                 t.FromState,
                 t.ToState,
                 t.Timestamp,
