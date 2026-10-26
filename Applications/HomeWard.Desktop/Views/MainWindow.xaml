@@ -8,135 +8,194 @@
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewmodels="clr-namespace:HomeWard.Desktop.ViewModels"
-    Title="Home Ward"
+    Title="HomeWard"
     d:DataContext="{d:DesignInstance Type=viewmodels:MainWindowViewModel,
                                      IsDesignTimeCreatable=True}"
-    BorderThickness="0"
+    AllowsTransparency="True"
+    Background="Transparent"
     ResizeMode="NoResize"
     SizeToContent="WidthAndHeight"
-    WindowStyle="None"
     WindowStartupLocation="CenterScreen"
+    WindowStyle="None"
     mc:Ignorable="d">
-    <Border Background="{DynamicResource MaterialDesign.Brush.Primary}">
 
-        <Grid Width="Auto">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <controls:TitleBarControl Grid.Row="0" DataContext="{Binding TitleBar}" />
-            <StackPanel
-                Grid.Row="1"
-                Width="364"
-                Orientation="Vertical">
-                <StackPanel
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    materialDesign:RippleAssist.IsCentered="True"
-                    Orientation="Horizontal">
-                    <materialDesign:ColorZone
-                        Padding="8,4,8,4"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Panel.ZIndex="1"
-                        materialDesign:ElevationAssist.Elevation="Dp2"
-                        CornerRadius="2"
-                        Mode="Standard">
+    <Grid Margin="20">
+
+        <Border
+            Background="{DynamicResource MaterialDesign.Brush.Background}"
+            CornerRadius="12"
+            Effect="{DynamicResource MaterialDesignShadowDepth1}">
+
+            <Grid Width="400">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="300" />
+                </Grid.RowDefinitions>
+
+                <!--  TitleBar  -->
+                <controls:TitleBarControl Grid.Row="0" DataContext="{Binding TitleBar}" />
+
+                <!--  Timer display  -->
+                <Border
+                    Grid.Row="1"
+                    Margin="24,20,24,0"
+                    Padding="16,20"
+                    Background="{DynamicResource MaterialDesign.Brush.Primary}"
+                    CornerRadius="8">
+                    <StackPanel>
                         <TextBlock
-                            Name="timerTextBlock"
-                            MinWidth="200"
-                            Margin="8,0,0,0"
                             HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                            Foreground="White"
+                            Opacity="0.7"
+                            Style="{StaticResource MaterialDesignCaptionTextBlock}"
+                            Text="Tempo trabalhado" />
+                        <TextBlock
+                            Margin="0,4,0,0"
+                            HorizontalAlignment="Center"
+                            FontWeight="Bold"
+                            Foreground="White"
                             Style="{StaticResource MaterialDesignHeadline3TextBlock}"
-                            Text="{Binding Path=TotalWorkedTimeText}" />
-                    </materialDesign:ColorZone>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
+                            Text="{Binding TotalWorkedTimeText}" />
+                    </StackPanel>
+                </Border>
+
+                <!--  Action buttons  -->
+                <WrapPanel
+                    Grid.Row="2"
+                    Margin="24,16,24,0"
+                    HorizontalAlignment="Center">
+
                     <Button
-                        Margin="8,8,8,8"
-                        Command="{Binding Path=StartCommand}"
+                        Margin="6"
+                        Command="{Binding StartCommand}"
                         Style="{StaticResource MaterialDesignFloatingActionLightButton}"
-                        ToolTip="Bora começar a trampar!">
-                        <materialDesign:PackIcon
-                            Width="25"
-                            Height="25"
-                            Kind="Timer" />
+                        ToolTip="Iniciar">
+                        <StackPanel>
+                            <materialDesign:PackIcon
+                                Width="24"
+                                Height="24"
+                                HorizontalAlignment="Center"
+                                Kind="Timer" />
+                        </StackPanel>
                     </Button>
+
                     <Button
-                        Margin="8,8,8,8"
-                        Command="{Binding Path=StopCommand}"
+                        Margin="6"
+                        Command="{Binding RestCommand}"
                         Style="{StaticResource MaterialDesignFloatingActionLightButton}"
-                        ToolTip="Chega de trampo por hoje!">
+                        ToolTip="Pausa remunerada">
                         <materialDesign:PackIcon
-                            Width="25"
-                            Height="25"
-                            Kind="TimerStop" />
-                    </Button>
-                    <Button
-                        Margin="8,8,8,8"
-                        Command="{Binding Path=ResumeCommand}"
-                        Style="{StaticResource MaterialDesignFloatingActionLightButton}"
-                        ToolTip="Bora voltar a trampar!">
-                        <materialDesign:PackIcon
-                            Width="25"
-                            Height="25"
-                            Kind="TimerPlay" />
-                    </Button>
-                    <Button
-                        Margin="8,8,8,8"
-                        Command="{Binding Path=RestCommand}"
-                        Style="{StaticResource MaterialDesignFloatingActionLightButton}"
-                        ToolTip="Pausinha remunerada :)">
-                        <materialDesign:PackIcon
-                            Width="25"
-                            Height="25"
+                            Width="24"
+                            Height="24"
                             Kind="Coffee" />
                     </Button>
+
                     <Button
-                        Margin="8,8,8,8"
-                        Command="{Binding Path=PauseCommand}"
+                        Margin="6"
+                        Command="{Binding ResumeCommand}"
                         Style="{StaticResource MaterialDesignFloatingActionLightButton}"
-                        ToolTip="Pausa não remunerada :(">
+                        ToolTip="Retomar">
                         <materialDesign:PackIcon
-                            Width="25"
-                            Height="25"
+                            Width="24"
+                            Height="24"
+                            Kind="TimerPlay" />
+                    </Button>
+
+                    <Button
+                        Margin="6"
+                        Command="{Binding PauseCommand}"
+                        Style="{StaticResource MaterialDesignFloatingActionLightButton}"
+                        ToolTip="Pausa não remunerada">
+                        <materialDesign:PackIcon
+                            Width="24"
+                            Height="24"
                             Kind="CoffeeOff" />
                     </Button>
-                </StackPanel>
-            </StackPanel>
-            <ScrollViewer
-                Name="HistoryScrollViewer"
-                Grid.Row="2"
-                Width="Auto"
-                Height="300"
-                Background="LightGray"
-                ScrollChanged="MyScrollViewer_ScrollChanged">
-                <ItemsControl ItemsSource="{Binding History}">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel Orientation="Vertical" />
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Margin="5" Orientation="Vertical">
-                                <TextBlock
-                                    FontSize="16"
-                                    FontWeight="Bold"
-                                    Text="{Binding Title}" />
-                                <TextBlock
-                                    FontSize="12"
-                                    FontWeight="SemiBold"
-                                    Text="{Binding Description}" />
-                                <Separator Background="Black" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </ScrollViewer>
-        </Grid>
-    </Border>
+
+                    <Button
+                        Margin="6"
+                        Command="{Binding StopCommand}"
+                        Style="{StaticResource MaterialDesignFloatingActionMiniSecondaryButton}"
+                        ToolTip="Encerrar sessão">
+                        <materialDesign:PackIcon
+                            Width="20"
+                            Height="20"
+                            Kind="TimerStop" />
+                    </Button>
+
+                </WrapPanel>
+
+                <!--  Separador com label  -->
+                <Grid Grid.Row="3" Margin="24,16,24,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Separator Grid.Column="0" VerticalAlignment="Center" />
+                    <TextBlock
+                        Grid.Column="1"
+                        Margin="8,0"
+                        Foreground="{DynamicResource MaterialDesign.Brush.ForegroundLight}"
+                        Style="{StaticResource MaterialDesignOverlineTextBlock}"
+                        Text="HISTÓRICO" />
+                    <Separator Grid.Column="2" VerticalAlignment="Center" />
+                </Grid>
+
+                <!--  Histórico  -->
+                <ScrollViewer
+                    Name="HistoryScrollViewer"
+                    Grid.Row="4"
+                    Margin="0,8,0,0"
+                    ScrollChanged="MyScrollViewer_ScrollChanged"
+                    VerticalScrollBarVisibility="Auto">
+
+                    <ItemsControl Margin="16,0,16,16" ItemsSource="{Binding History}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <materialDesign:Card
+                                    Margin="0,4"
+                                    Padding="12,10"
+                                    materialDesign:ElevationAssist.Elevation="Dp1"
+                                    UniformCornerRadius="6">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <!--  Ícone lateral colorido  -->
+                                        <Border
+                                            Grid.Column="0"
+                                            Width="4"
+                                            Margin="0,0,10,0"
+                                            Background="{DynamicResource MaterialDesign.Brush.Primary}"
+                                            CornerRadius="2" />
+
+                                        <StackPanel Grid.Column="1">
+                                            <TextBlock
+                                                FontWeight="SemiBold"
+                                                Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
+                                                Text="{Binding Title}"
+                                                TextTrimming="CharacterEllipsis" />
+                                            <TextBlock
+                                                Margin="0,2,0,0"
+                                                Foreground="{DynamicResource MaterialDesign.Brush.ForegroundLight}"
+                                                Style="{StaticResource MaterialDesignCaptionTextBlock}"
+                                                Text="{Binding Description}" />
+                                        </StackPanel>
+                                    </Grid>
+                                </materialDesign:Card>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                </ScrollViewer>
+
+            </Grid>
+        </Border>
+    </Grid>
 </Window>

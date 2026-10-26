@@ -1,4 +1,4 @@
-﻿using HomeWard.Domain.Dtos;
+﻿using HomeWard.Application.Dtos;
 
 namespace HomeWard.Application.Auth;
 

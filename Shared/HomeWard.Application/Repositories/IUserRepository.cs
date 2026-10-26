@@ -1,4 +1,4 @@
-﻿using HomeWard.Domain.Dtos;
+﻿using HomeWard.Application.Dtos;
 using HomeWard.Domain.Entities;
 
 namespace HomeWard.Application.Repositories;

@@ -1,4 +1,5 @@
-﻿using HomeWard.Application.WorkSessions;
+﻿using HomeWard.Application.SessionTransitions;
+using HomeWard.Application.WorkSessions;
 using HomeWard.Domain.Enums;
 
 namespace HomeWard.Desktop.Infrastructure.Client.WorkSessionApiClient;
