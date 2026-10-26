@@ -1,5 +1,5 @@
-﻿using HomeWard.Application.Users;
-using HomeWard.Domain.Dtos;
+﻿using HomeWard.Application.Dtos;
+using HomeWard.Application.Users;
 
 namespace HomeWard.Web.Infrastructure.Client.User;
 

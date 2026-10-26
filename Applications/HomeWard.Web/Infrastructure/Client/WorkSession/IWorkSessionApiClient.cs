@@ -1,4 +1,5 @@
-﻿using HomeWard.Application.Dtos;
+﻿using HomeWard.Application.Documents;
+using HomeWard.Application.Dtos;
 using HomeWard.Application.WorkSessions;
 
 namespace HomeWard.Web.Infrastructure.Client.WorkSession;

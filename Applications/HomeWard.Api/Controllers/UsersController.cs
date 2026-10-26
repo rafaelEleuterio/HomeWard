@@ -1,6 +1,6 @@
-﻿using HomeWard.Application.Repositories;
+﻿using HomeWard.Application.Dtos;
+using HomeWard.Application.Repositories;
 using HomeWard.Application.Users;
-using HomeWard.Domain.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,7 +28,7 @@ public class UsersController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<UserDto>> CreateUser(CreateUserRequest request, CancellationToken cancellationToken)
     {
-        var user = await _userRepository.CreateAsync(request.user, cancellationToken);
+        var user = await _userRepository.CreateAsync(request.userDto, cancellationToken);
         return Ok(user);
     }
 

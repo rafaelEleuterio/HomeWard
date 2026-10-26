@@ -1,0 +1,198 @@
+﻿@page "/client-demands"
+@using System.Text.Json
+
+<PageTitle>Client demands</PageTitle>
+
+<div class="board-header">
+    <div>
+        <h2>Client demands</h2>
+    </div>
+
+    <button class="config-button" @onclick="OpenSettings">
+        Configuration
+    </button>
+</div>
+
+@if (isSettingsOpen)
+{
+    <div class="settings-panel">
+        <h3>Configuration</h3>
+
+        <div class="field">
+            <label>HomeWard Desktop timer URL</label>
+            <input @bind="desktopTimerBaseUrl" placeholder="homewarddesktop://timer" />
+        </div>
+
+        <div class="settings-actions">
+            <button class="primary-button" @onclick="SaveSettings">Save</button>
+            <button class="secondary-button" @onclick="CloseSettings">Close</button>
+        </div>
+    </div>
+}
+
+<div class="board">
+    <div class="column">
+        <div class="column-header waiting">
+            <h3>Waiting for developer to analyze</h3>
+        </div>
+
+        @foreach (var task in tasks.Where(x => x.Status == TaskStatus.WaitingForAnalysis))
+        {
+            <div class="task-card">
+                <div class="task-title">@task.Title</div>
+                <p>@task.Description</p>
+
+                <div class="task-meta">
+                    <span>@task.CreatedAt.ToString("dd/MM/yyyy")</span>
+                </div>
+
+                <div class="task-actions">
+                    <button class="primary-button" @onclick="() => MoveTask(task, TaskStatus.InProgress)">
+                        Move to working
+                    </button>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="column">
+        <div class="column-header working">
+            <h3>Developer is working</h3>
+        </div>
+
+        @foreach (var task in tasks.Where(x => x.Status == TaskStatus.InProgress))
+        {
+            <div class="task-card working-card">
+                <div class="task-title">@task.Title</div>
+                <p>@task.Description</p>
+
+                <div class="task-meta">
+                    <span>@task.CreatedAt.ToString("dd/MM/yyyy")</span>
+                </div>
+
+                <div class="task-actions">
+                    <button class="success-button" @onclick="() => MoveTask(task, TaskStatus.Done)">
+                        Mark as done
+                    </button>
+
+                    @if (!string.IsNullOrWhiteSpace(task.DesktopTimerUrl))
+                    {
+                        <a class="timer-link" href="@task.DesktopTimerUrl" target="_blank" rel="noreferrer">
+                            Open desktop timer
+                        </a>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="column">
+        <div class="column-header done">
+            <h3>Task done</h3>
+        </div>
+
+        @foreach (var task in tasks.Where(x => x.Status == TaskStatus.Done))
+        {
+            <div class="task-card done-card">
+                <div class="task-title">@task.Title</div>
+                <p>@task.Description</p>
+
+                <div class="task-meta">
+                    <span>@task.CreatedAt.ToString("dd/MM/yyyy")</span>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+    private bool isSettingsOpen = false;
+    private string desktopTimerBaseUrl = "homewarddesktop://timer";
+
+    private List<ClientDemandTask> tasks = new()
+    {
+        new()
+        {
+            Id = Guid.NewGuid(),
+            Title = "Repair bedroom window",
+            Description = "The client requested the inspection of the bedroom window and a material estimate.",
+            Status = TaskStatus.WaitingForAnalysis,
+            CreatedAt = DateTime.Now.AddDays(-2),
+            DesktopTimerUrl = "homewarddesktop://timer?task=repair-bedroom-window"
+        },
+        new()
+        {
+            Id = Guid.NewGuid(),
+            Title = "Kitchen plumbing review",
+            Description = "Need to inspect the plumbing and prepare a quote.",
+            Status = TaskStatus.InProgress,
+            CreatedAt = DateTime.Now.AddDays(-1),
+            DesktopTimerUrl = "homewarddesktop://timer?task=kitchen-plumbing"
+        },
+        new()
+        {
+            Id = Guid.NewGuid(),
+            Title = "Bathroom lighting",
+            Description = "Lighting project completed and approved by the client.",
+            Status = TaskStatus.Done,
+            CreatedAt = DateTime.Now.AddDays(-3),
+            DesktopTimerUrl = "homewarddesktop://timer?task=bathroom-lighting"
+        }
+    };
+
+    private void OpenSettings()
+    {
+        isSettingsOpen = true;
+    }
+
+    private void CloseSettings()
+    {
+        isSettingsOpen = false;
+    }
+
+    private void SaveSettings()
+    {
+        foreach (var task in tasks.Where(x => x.Status == TaskStatus.InProgress))
+        {
+            task.DesktopTimerUrl = BuildDesktopTimerUrl(task);
+        }
+
+        isSettingsOpen = false;
+    }
+
+    private void MoveTask(ClientDemandTask task, TaskStatus newStatus)
+    {
+        task.Status = newStatus;
+
+        if (newStatus == TaskStatus.InProgress)
+        {
+            task.DesktopTimerUrl = BuildDesktopTimerUrl(task);
+        }
+    }
+
+    private string BuildDesktopTimerUrl(ClientDemandTask task)
+    {
+        var baseUrl = string.IsNullOrWhiteSpace(desktopTimerBaseUrl)
+            ? "homewarddesktop://timer"
+            : desktopTimerBaseUrl.Trim();
+
+        return $"{baseUrl}?taskId={task.Id}";
+    }
+
+    public enum TaskStatus
+    {
+        WaitingForAnalysis,
+        InProgress,
+        Done
+    }
+
+    public class ClientDemandTask
+    {
+        public Guid Id { get; set; }
+        public string Title { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+        public TaskStatus Status { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public string? DesktopTimerUrl { get; set; }
+    }
+}

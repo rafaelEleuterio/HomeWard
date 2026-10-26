@@ -123,7 +123,7 @@ else
         sessions = _sessions
         .Select(session => new WorkSessionRow
         {
-            CreatedAt = session.CreatedAt,
+            CreatedAt = DateTime.Now,
             State = session.State,
             BillableTime = session.BillableTime,
             WorkedTime = session.WorkedTime,
@@ -131,7 +131,7 @@ else
             History = session.History
                 .Select(transition => new SessionTransitionRow
                 {
-                    SessionTransitionId = transition.SessionTransitionId,
+                    SessionTransitionId = new Guid(),
                     Timestamp = transition.Timestamp,
                     FromState =transition.FromState,
                     ToState =transition.ToState,
